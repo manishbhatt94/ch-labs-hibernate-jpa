@@ -29,3 +29,22 @@ But, if we are sure that we won't be switching Frameworks, and will stick with
 Hibernate Framework only; and we do want to leverage the additional features
 that Hibernate's Native API provides on top of JPA, then we can consider using
 Hibernate's Native API Implementation.
+
+## JavaEE Specification Modules and Their Implementations
+
+Refer to the write-up in [JAVA_ECOSYSTEM_README.md](./JAVA_ECOSYSTEM_README.md),
+and also to the below diagram to get a rough understanding of JavaEE specs and
+their implementations contained in Application Servers.
+
+<table align="center" border="1" cellpadding="8">
+  <tr>
+    <td align="center">
+      <img src="assets/images/fig-01-JavaEE-Specification-Modules-and-Their-Implementations.png" 
+           alt="JavaEE Specification Modules and Their Implementations" 
+           title="JavaEE Specification Modules and Their Implementations" 
+           width="820" height="746" loading="lazy" border="1">
+      <br />
+      <em>Figure 1: JavaEE Specification Modules and Their Implementations</em>
+    </td>
+  </tr>
+</table>
