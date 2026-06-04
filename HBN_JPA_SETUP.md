@@ -158,7 +158,7 @@ a standard learning setup.
 
 ### Eclipse Build Path Setup
 
-**JARs required in total:**
+#### JARs required in total:
 
 1. All JARs from `lib/required/` in the Hibernate release ZIP
 2. The MySQL JDBC driver: `mysql-connector-java-x.x.x.jar`
@@ -167,7 +167,7 @@ a standard learning setup.
      [com.mysql/mysql-connector-j/8.2.0](https://mvnrepository.com/artifact/com.mysql/mysql-connector-j/8.2.0)
      link on mvnrepository.com.
 
-**Steps in Eclipse:**
+#### Steps in Eclipse:
 
 1. Right-click the project →
    **Build Path** → **Configure Build Path**
@@ -176,5 +176,84 @@ a standard learning setup.
 4. Repeat for the MySQL connector JAR
 5. **Apply and Close**
 
-Eclipse will resolve all JPA and Hibernate imports after this. No other
-JARs are needed for the duration of a Hibernate + JPA learning project.
+This adds all JARs, i.e. in Hibernate zip bundle (inside its `lib/required/`
+path) and also the MySQL Connector J's JAR all under one level, which will show
+up under the **Referenced Libraries** section along-side other prominents items
+in Package / Project Explorer in Eclipse like *JRE System Library [Adoptium-8]*
+and *src/* Folder.
+
+> Instead of directly putting all the JARs under Referenced Libraries by just
+> using the "Add External JARs..." button in the project properties window
+> option **Java Build Path** > **Libraries tab**.
+> Instead, we can create two separate **User Library**'s, first that contains
+> all JARs relevant to Hibernate & JPA, and second that contains the MySQL
+> Connector J's JAR.
+> These User Libraries in Eclipse can be used throughout projects in an Eclipse
+> Workspace. For new workspaces, these might need to be created again.
+> We will provide below custom names for these two User Libraries:
+> 1. `hibernate-release-5.6.5--lib-required` for the User Library containing
+>    all the Hibernate essential JARs.
+> 1. `mysql-connector-8.2.0` for the User Library containing the JAR for MySQL
+>    Connector J
+
+#### Add JARs in separate User Libraries in Eclipse:
+
+- Right-click the project, and select Properties from the context menu.
+- From the Project Properties popup, select Java Build Path menu option from
+the left side-bar.
+- Then select the "Libraries" tab from the main section. This Libraries tab
+represents the classpath.
+- Now, the right-hand side has some buttons - select the "Add Library" button.
+- This opens the "Add Library" popup. Select "User Library" from the list and
+click Next.
+- Now we see a list of previously created "User Libraries" - which can be empty
+if we have not yet added any, or if it's a new Eclipse Workspace.
+- If we have not previously created the two User Libraries that we discussed
+about, then we will do that now.
+- Click the "User Libraries..." button on the right-hand side.
+- A new popup opens up. Here click the "New..." button from the right-hand side.
+- Which opens a tiny dialog box "New User Library" - where we need to enter a
+name for our library. Enter any name (the ones we discussed) and click "OK"
+button. As discussed we will two User Libraries with these names & click "OK":
+  1. `hibernate-release-5.6.5--lib-required`
+  1. `mysql-connector-8.2.0`
+- This creates a new entry with this name in the previous popup's list of
+**"Defined user libraries:"** with the name(s) we provided in previous step.
+- We should have entries for the two User Libraries items in this window.
+- Select the newly created User Library item, one-by-one. (First perform the
+further steps for the `hibernate-release-5.6.5--lib-required` User Library, and
+then for the `mysql-connector-8.2.0` User Library.)
+- And click on the "Add External JARs..." button from the right-hand side.
+- Select the downloaded JAR from the file-picker.
+  1. For `hibernate-release-5.6.5--lib-required` User Library: From the ZIP
+     file download from SourceForge, select all the JAR files present in the path `hibernate-release-5.6.5.Final/lib/required`.
+  1. For `mysql-connector-8.2.0` User Library: Select the JAR file
+     `mysql-connector-j-8.2.0.jar` downloaded from
+     [com.mysql/mysql-connector-j/8.2.0](https://mvnrepository.com/artifact/com.mysql/mysql-connector-j/8.2.0) location.
+- Then click "Apply and Close" button at the bottom of the popup.
+- Click "Finish" button from the previous popup.
+- Finally, click the "Apply and Close" button from the original project
+properties "Java Build Path" popup.
+
+> [!INFO]
+> Eclipse will resolve all JPA and Hibernate imports after this. No other
+> JARs are needed for the duration of a Hibernate + JPA learning project.
+
+#### Package Explorer after adding all JARs
+
+Below is screenshot of Eclipse Package Explorer of a project, after creating
+the two User Libraries, adding the respective JARs to them, and hooking the
+Libraries up with the new Java Project.
+
+<table align="center" border="1" cellpadding="8">
+  <tr>
+    <td align="center">
+      <img src="assets/images/fig-02-HBN-JPA-MySQL-jars-Package-Explorer.png" 
+           alt="Hibernate/JPA/MySQL JARs Added to Eclipse Java Project" 
+           title="Hibernate/JPA/MySQL JARs Added to Eclipse Java Project" 
+           width="760" height="588" loading="lazy" border="1">
+      <br />
+      <em>Figure 1: Hibernate/JPA/MySQL JARs Added to Eclipse Java Project</em>
+    </td>
+  </tr>
+</table>
