@@ -248,12 +248,113 @@ Libraries up with the new Java Project.
 <table align="center" border="1" cellpadding="8">
   <tr>
     <td align="center">
-      <img src="assets/images/fig-02-HBN-JPA-MySQL-jars-Package-Explorer.png" 
-           alt="Hibernate/JPA/MySQL JARs Added to Eclipse Java Project" 
-           title="Hibernate/JPA/MySQL JARs Added to Eclipse Java Project" 
+      <img src="assets/images/fig-02-HBN-JPA-MySQL-jars-Package-Explorer.png"
+           alt="Hibernate/JPA/MySQL JARs Added to Eclipse Java Project"
+           title="Hibernate/JPA/MySQL JARs Added to Eclipse Java Project"
            width="760" height="588" loading="lazy" border="1">
       <br />
       <em>Figure 1: Hibernate/JPA/MySQL JARs Added to Eclipse Java Project</em>
     </td>
   </tr>
 </table>
+
+#### Download & link Sources JARs & Javadoc JARs for few of above JARs
+
+Download `*-sources.jar` and `*-javadoc.jar` files from the below mentioned
+mvnrepository.com links for few of the libraries (i.e. for the few classes / 
+interfaces / annotations / etc. sources codes) that we might need to inspect in
+Eclipse IDE using Ctrl + Click and jump to their Source Code.
+
+Go to the mentioned mvnrepository.com links, and on that page, in the **Overview**
+tab, you will find a line item **Files** with few buttons thay say `pom (5 KB)`,
+`jar (7.1 MB)`, `View All`, etc.
+
+Click on the **View All** button, as depicted in below screenshot:
+
+<table align="center" border="1" cellpadding="8">
+  <tr>
+    <td align="center">
+      <img src="assets/images/fig-03-mvn-artifact-overview.png"
+           alt="MVN Repository - Artifact Overview Tab"
+           title="MVN Repository - Artifact Overview Tab"
+           width="540" height="635" loading="lazy" border="1">
+      <br />
+      <em>Figure 2: MVN Repository - Artifact Overview Tab</em>
+    </td>
+  </tr>
+</table>
+<br>
+
+Clicking on the **View All** button will open a page listing all JAR files for
+this artifact. This page's URL will be something of the format:
+[repo1.maven.org/maven2/org/hibernate/hibernate-core/5.6.5.Final/](https://repo1.maven.org/maven2/org/hibernate/hibernate-core/5.6.5.Final/)
+depending on the artifact.
+
+From this page, we will download two JAR files, as highlighted in below
+screenshot:
+
+1. `[artifact]-javadoc.jar`: This is the Javadoc JAR file for the artifact.
+   Example file name `hibernate-core-5.6.5.Final-javadoc.jar`, or
+   `mysql-connector-j-8.2.0-javadoc.jar`, or `javax.persistence-api-2.2-javadoc.jar`
+   etc. depending on the artifact we're currently downloading for.
+1. `[artifact]-sources.jar`: This is the Sources JAR file for the artifact.
+   Example file name `hibernate-core-5.6.5.Final-sources.jar`, or
+   `mysql-connector-j-8.2.0-sources.jar`, or `javax.persistence-api-2.2-sources.jar`
+   etc. depending on the artifact we're currently downloading for.
+
+<table align="center" border="1" cellpadding="8">
+  <tr>
+    <td align="center">
+      <img src="assets/images/fig-04-mvn-artifact-view-all-files.png"
+           alt="MVN Repository - Artifact View All Files Page"
+           title="MVN Repository - Artifact View All Files Page"
+           width="680" height="604" loading="lazy" border="1">
+      <br />
+      <em>Figure 3: MVN Repository - Artifact View All Files Page</em>
+    </td>
+  </tr>
+</table>
+<br>
+
+**Download Sources & Javadoc JARs for these Libraries from below mentioned MVN Repository Links:**
+
+> Note: What is a **Binary JAR**?
+> In Maven terminology, JAR files that only contain compiled `.class` files and
+> project resources (without source code or Javadoc) are most commonly referred
+> to as the **binary JAR** or simply the **main artifact**.
+> It can also be described as: The standard distribution file containing
+> compiled bytecode ready for execution by the JVM.
+
+1. [com.mysql/mysql-connector-j/8.2.0](https://mvnrepository.com/artifact/com.mysql/mysql-connector-j/8.2.0)
+   - This is for the Binary JAR `mysql-connector-j-8.2.0.jar`.
+1. [javax.persistence/javax.persistence-api/2.2](https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api/2.2)
+   - This is for the Binary JAR `javax.persistence-api-2.2.jar`.
+1. [org.hibernate/hibernate-core/5.6.5.Final](https://mvnrepository.com/artifact/org.hibernate/hibernate-core/5.6.5.Final)
+   - This is for the Binary JAR `hibernate-core-5.6.5.Final.jar`.
+1. [org.hibernate.common/hibernate-commons-annotations/5.1.2.Final](https://mvnrepository.com/artifact/org.hibernate.common/hibernate-commons-annotations/5.1.2.Final)
+   - (Note: this artifact only has the `-sources.jar` file, and not the javadoc file.)
+   - This is for the Binary JAR `hibernate-commons-annotations-5.1.2.Final.jar`.
+
+**Link the Source & Javadoc JARs with the respective Library JARs in Eclipse:**
+
+Expand your Java Project's node in the Package Explorer of Eclipse IDE. Then,
+also expand the two User Libraries (viz. `hibernate-release-5.6.5--lib-required`
+and `mysql-connector-8.2.0`, which we created in earlier sections, and linked
+to this project) under this project in Package Explorer.
+
+After expanding the Project, and within it, the User Libraries, we will see the
+list of Binary JARs present in each User Library. The view will look like
+*Figure 1: Hibernate/JPA/MySQL JARs Added to Eclipse Java Project* which is
+attached in [an earlier section](#package-explorer-after-adding-all-jars) on
+this same Markdown page.
+
+Now, one-by-one, for each of the Binary JARs (for which we downloaded the 
+Sources & Javadoc JAR):
+- Right-click that Binary JAR in the Package Explorer,
+and select **Properties** option from the context-menu.
+- In the left sidebar of the Properties popup, select these options one-by-one:
+  - **Javadoc Location** option
+  - **Java Source Attachment** option
+- For above options, follow the steps mentioned in the section titled:
+  [Link the sources JAR for these JARs](https://github.com/manishbhatt94/ch-labs-servlet-jsp/tree/main/12-jstl-sql#link-the-sources-jar-for-these-jars)
+  on the README page of another GitHub repository of mine.
