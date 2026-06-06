@@ -5,6 +5,40 @@
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
 	version="2.2">
 
-	<persistence-unit name="my-persistence-unit-1"></persistence-unit>
+	<!-- Define a Persistence Unit with a unique name -->
+	<persistence-unit name="my-persistence-unit-1">
+
+		<!-- Inform which JPA Provider (or Implementation framework) is being used: 
+			Hibernate / EclipseLink / OpenJPA / DataNucleus / etc. -->
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+		<properties>
+			<!-- Inform the JPA Provider about the database connection details -->
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://localhost:3306/ch_labs_jdbc_01" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password"
+				value="manish" />
+			<property name="javax.persistence.jdbc.driver"
+				value="com.mysql.cj.jdbc.Driver" />
+
+			<!-- Inform the JPA Provider about the SQL Dialect of the database -->
+<!-- 			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.MySQL8Dialect" />
+ -->
+			<!-- Inform the JPA Provider to show the generated SQL statements in the 
+				console -->
+<!-- 			<property name="hibernate.show_sql" value="true" />
+ -->
+			<!-- Inform the JPA Provider to format the generated SQL statements in 
+				a readable way -->
+<!-- 			<property name="hibernate.format_sql" value="true" />
+ -->
+			<!-- Inform the JPA Provider to automatically create/update the database 
+				schema based on the entity mappings -->
+			<!-- <property name="hibernate.hbm2ddl.auto" value="update" /> -->
+		</properties>
+
+	</persistence-unit>
 
 </persistence>
