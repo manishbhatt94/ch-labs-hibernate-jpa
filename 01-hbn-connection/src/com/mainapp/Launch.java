@@ -17,6 +17,8 @@ public class Launch {
 		EntityManager em = emf.createEntityManager();
 
 		System.out.println("EntityManager created successfully: " + em);
+		// Prints message similar to:
+		// EntityManager created successfully: SessionImpl(1950800085<open>)
 
 		System.out.println("Connection to the database established successfully!");
 

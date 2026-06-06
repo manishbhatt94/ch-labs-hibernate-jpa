@@ -461,6 +461,13 @@ with the `<persistence>` tag properly mentioned with XML Scheme Namespaces etc.
 </persistence>
 ```
 
+> [!NOTE]
+> A sample `persistence.xml` file (with a minor difference that it references
+> JPA Version 2.0), is provided in
+> [Hibernate 5.6 Getting Started Guide](https://docs.hibernate.org/orm/5.6/quickstart/html_single/#hibernate-gsg-tutorial-jpa-config)'s section titled
+> *4.1 Tutorial Using the Java Persistence API (JPA) -> persistence.xml*. Make
+> sure to also check this out.
+
 Inside the `<persistence>` tag, we define one or more `<persistence-unit>` tags
 with a `name` attribute, whose value we need to reference in our Java code:
 
