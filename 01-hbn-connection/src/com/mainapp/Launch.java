@@ -7,7 +7,7 @@ public class Launch {
 
 	public static void main(String[] args) {
 
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("hbn-connection");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence-unit-1");
 
 	}
 

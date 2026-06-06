@@ -182,6 +182,7 @@ up under the **Referenced Libraries** section along-side other prominents items
 in Package / Project Explorer in Eclipse like *JRE System Library [Adoptium-8]*
 and *src/* Folder.
 
+> [!TIP]
 > Instead of directly putting all the JARs under Referenced Libraries by just
 > using the "Add External JARs..." button in the project properties window
 > option **Java Build Path** > **Libraries tab**.
@@ -235,7 +236,7 @@ then for the `mysql-connector-8.2.0` User Library.)
 - Finally, click the "Apply and Close" button from the original project
 properties "Java Build Path" popup.
 
-> [!INFO]
+> [!IMPORTANT]
 > Eclipse will resolve all JPA and Hibernate imports after this. No other
 > JARs are needed for the duration of a Hibernate + JPA learning project.
 
@@ -358,3 +359,111 @@ and select **Properties** option from the context-menu.
 - For above options, follow the steps mentioned in the section titled:
   [Link the sources JAR for these JARs](https://github.com/manishbhatt94/ch-labs-servlet-jsp/tree/main/12-jstl-sql#link-the-sources-jar-for-these-jars)
   on the README page of another GitHub repository of mine.
+
+---
+<br>
+
+## Peristence Schema to use in &nbsp;`src/META-INF/persistence.xml`&nbsp; configuration file
+
+The XML schema / namespace information for JPA 2.2 (which we're using) is
+mentioned in website:
+[Java Persistence API: XML Schemas](https://www.oracle.com/webfolder/technetwork/jsc/xml/ns/persistence/index.html#2.2)
+inside file `persistence_2_2.xsd` which can be downloaded from this website's
+section titled **"Java Persistence 2.2 Schema Resources"**.
+
+In this file, we can note the below mentioned documentation within the
+`<xsd:annotation> -> <xsd:documentation>` XML elements:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- persistence.xml schema -->
+<xsd:schema targetNamespace="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:persistence="http://xmlns.jcp.org/xml/ns/persistence"
+  elementFormDefault="qualified" 
+  attributeFormDefault="unqualified" 
+  version="2.2">
+	<xsd:annotation>
+		<xsd:documentation>
+      @(#)persistence_2_2.xsd 2.2  July 17, 2017
+    </xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>
+
+  Copyright (c) 2008  - 2017 Oracle Corporation. All rights reserved. 
+  
+  This program and the accompanying materials are made available under the 
+  terms of the Eclipse Public License v1.0 and Eclipse Distribution License v. 1.0 
+  which accompanies this distribution. 
+  The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
+  and the Eclipse Distribution License is available at 
+  http://www.eclipse.org/org/documents/edl-v10.php.
+  
+  Contributors:
+      Linda DeMichiel - Java Persistence 2.2, Version 2.2 (July 7, 2017)
+      Specification available from http://jcp.org/en/jsr/detail?id=338
+ 
+    </xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>
+			<![CDATA[
+
+     This is the XML Schema for the persistence configuration file.
+     The file must be named "META-INF/persistence.xml" in the 
+     persistence archive.
+
+     Persistence configuration files must indicate
+     the persistence schema by using the persistence namespace:
+
+     http://xmlns.jcp.org/xml/ns/persistence
+
+     and indicate the version of the schema by
+     using the version element as shown below:
+
+      <persistence
+			xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+                    http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+            version="2.2">
+
+          ...
+
+      </persistence>
+
+    ]]>
+		</xsd:documentation>
+	</xsd:annotation>
+
+  ...
+</xsd:schema>
+```
+
+From above, we need to copy the definition of `<persistence>` XML element.
+
+### How our "persistence.xml" file should look:
+
+Here is the starting point of reference of a sample `persistence.xml` file,
+with the `<persistence>` tag properly mentioned with XML Scheme Namespaces etc.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+	version="2.2">
+
+	<persistence-unit name="my-persistence-unit-1"></persistence-unit>
+
+</persistence>
+```
+
+Inside the `<persistence>` tag, we define one or more `<persistence-unit>` tags
+with a `name` attribute, whose value we need to reference in our Java code:
+
+```java
+EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence-unit-1");
+```
