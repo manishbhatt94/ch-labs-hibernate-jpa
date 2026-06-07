@@ -4,10 +4,10 @@ Database Interaction (CRUD):
 - Single Row Operation
 - Bulk Row Operation
 
-Single Row Operation:
-1. XML (No Annotations) -> Configuration & Mapping (ORM)
-1. XML + Annotations (Hybrid)
-1. Annotations Only (No XML)
+Various choices of approach for **Single Row Operation**:
+1. XML (No Annotations) Approach -> Configuration & Mapping (ORM)
+1. XML + Annotations Approach (Hybrid)
+1. Annotations Only Approach (No XML)
 
 ## Entity to RDBMS Mappings in XML
 
@@ -94,3 +94,54 @@ path only.
 
 </xsd:schema>
 ```
+
+### Object/Relational Mapping File (can be named "orm.xml")
+
+Here is the XML metadata with namespace & schema attributes that we must
+provide at the start of the **Object/Relational Mapping File ("orm.xml")**:
+
+```xml
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+      http://xmlns.jcp.org/xml/ns/persistence/orm_2_2.xsd"
+    version="2.2">
+
+    ...
+
+</entity-mappings>
+```
+
+### Short Notes on "orm.xml" Elements/Tags & Attributes
+
+#### <entity> Element
+
+```xml
+<entity-mappings ...>
+  <entity class="com.myapp.entities.Employee" access="PROPERTY">
+  </entity>
+</entity-mappings>
+```
+
+Attributes:
+- `class`: Contains the Fully Qualified Name of the class whose object (i.e. an entity)
+  we need to map to an RDBMS table.
+- `access` (values either `"PROPERTY"` or `"FIELD"`): Informs whether JPA Provider
+  (i.e. Hibernate) should access the entity object's members (instance variables)
+  using:
+  - **Getters** (when `access="PROPERTY"` - which is the default setting), or
+  - **Direct field access** (when `access="FIELD"`) - which the JPA Provider does
+     using Reflection API in order to access private instance variables.
+
+#### "table" Element ("entity" -> "table")
+
+```xml
+<entity-mappings ...>
+  <entity class="com.myapp.entities.Employee" access="PROPERTY">
+    <table name="hbn_employee" />
+  </entity>
+</entity-mappings>
+```
+
+Attributes:
+- `name`: 

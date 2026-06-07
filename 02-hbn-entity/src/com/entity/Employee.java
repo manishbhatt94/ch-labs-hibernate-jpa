@@ -4,22 +4,22 @@ public class Employee {
 
 	private int employeedId;
 
-	private String name;
+	private String employeeName;
 
-	private String address;
+	private String employeeAddress;
 
-	private int salary;
+	private int employeeSalary;
 
 	public Employee() {
 		super();
 	}
 
-	public Employee(int employeedId, String name, String address, int salary) {
+	public Employee(int employeedId, String employeeName, String employeeAddress, int employeeSalary) {
 		super();
 		this.employeedId = employeedId;
-		this.name = name;
-		this.address = address;
-		this.salary = salary;
+		this.employeeName = employeeName;
+		this.employeeAddress = employeeAddress;
+		this.employeeSalary = employeeSalary;
 	}
 
 	public int getEmployeedId() {
@@ -30,34 +30,34 @@ public class Employee {
 		this.employeedId = employeedId;
 	}
 
-	public String getName() {
-		return name;
+	public String getEmployeeName() {
+		return employeeName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getEmployeeAddress() {
+		return employeeAddress;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setEmployeeAddress(String employeeAddress) {
+		this.employeeAddress = employeeAddress;
 	}
 
-	public int getSalary() {
-		return salary;
+	public int getEmployeeSalary() {
+		return employeeSalary;
 	}
 
-	public void setSalary(int salary) {
-		this.salary = salary;
+	public void setEmployeeSalary(int employeeSalary) {
+		this.employeeSalary = employeeSalary;
 	}
 
 	@Override
 	public String toString() {
-		return "Employee [employeedId=" + employeedId + ", name=" + name + ", address=" + address + ", salary=" + salary
-				+ "]";
+		return "Employee [employeedId=" + employeedId + ", employeeName=" + employeeName + ", employeeAddress="
+				+ employeeAddress + ", employeeSalary=" + employeeSalary + "]";
 	}
 
 }

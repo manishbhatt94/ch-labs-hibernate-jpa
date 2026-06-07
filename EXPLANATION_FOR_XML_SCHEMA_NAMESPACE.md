@@ -67,6 +67,16 @@ In the context of **JPA**'s `persistence.xml`, the `xsi:schemaLocation`
 attribute points to the official XML Schema files published by the JPA
 specification.
 
+### Tools for visualizing XSD File, or generating Documentation from XSD File
+
+Need to research more, but some tools that I discovered, including Eclipse IDE
+(where you can Ctrl+Click on the XSD URL in the `xsi:schemaLocation` attribute)
+are:
+
+- Eclipse IDE (as descibed above)
+- [xsdviewer.com/](https://xsdviewer.com/)
+- [myxml.in/xsd-treeview.html](https://myxml.in/xsd-treeview.html)
+
 ### Why is XSD File used in "persistence.xml"?
 
 - **Validation:** Ensures your persistence.xml follows the correct structure
