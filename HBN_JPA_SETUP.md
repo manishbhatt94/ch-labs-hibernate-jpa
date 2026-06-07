@@ -371,6 +371,27 @@ mentioned in website:
 inside file `persistence_2_2.xsd` which can be downloaded from this website's
 section titled **"Java Persistence 2.2 Schema Resources"**.
 
+### Schema Definition (XSD) File for "persistence.xml" configuration file
+
+> [!TIP]
+> An **XSD file (XML Schema Definition)** is essentially a blueprint that
+> defines the structure, elements, and data types allowed in an XML document.
+>
+> In the context of JPA's `persistence.xml` file, the `xsi:schemaLocation`
+> attribute points to the official XML Schema files published by the JPA
+> specification.
+>
+> **Why it's (XSD File is) used in `persistence.xml`?**
+> - **Validation:** Ensures your persistence.xml follows the correct structure
+> (e.g., <persistence-unit>, <properties>, etc.).
+> - **IDE Support:** Tools like Eclipse or IntelliJ use the schema to provide
+> auto-completion, validation, and error highlighting.
+> - **Portability:** Confirms your configuration matches the JPA standard, so
+> it works across different providers (Hibernate, EclipseLink, etc.).
+
+This file `persistence_2_2.xsd` is the Schema file for the `persistence.xml`
+configuration file.
+
 In this file, we can note the below mentioned documentation within the
 `<xsd:annotation> -> <xsd:documentation>` XML elements:
 
@@ -461,6 +482,20 @@ with the `<persistence>` tag properly mentioned with XML Scheme Namespaces etc.
 </persistence>
 ```
 
+As stated in the previous section, regarding the `<persistence>` XML element
+that we see above, please note again, that the values of the `xmlns`,
+`xmlns:xsi`, `xsi:schemaLocation`, `version` attributes of the `<persistence>`
+element are all taken from the `persistence_2_2.xsd` XML hosted at and
+available for download at
+[Java Persistence API: XML Schemas](https://www.oracle.com/webfolder/technetwork/jsc/xml/ns/persistence/index.html#2.2)
+webpage.
+
+Similarly, on this webpage, another file called `orm_2_2.xsd` is also hosted,
+which, as we'll see in
+[Section Entity to RDBMS Mappings in XML](02-hbn-entity/README.md#entity-to-rdbms-mappings-in-xml)
+holds details of the XML tags, namespace, schema etc. to use for defining the
+mapping between Entity Java objects & RDBMS tables / columns.
+
 > [!NOTE]
 > A sample `persistence.xml` file (with a minor difference that it references
 > JPA Version 2.0), is provided in
@@ -474,3 +509,11 @@ with a `name` attribute, whose value we need to reference in our Java code:
 ```java
 EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence-unit-1");
 ```
+
+
+## Object <-> RDBMS Mappings Definition in XML
+
+Refer the section:
+[Entity to RDBMS Mappings in XML](02-hbn-entity/README.md#entity-to-rdbms-mappings-in-xml)
+where we describe the XML file metadata (i.e. the XML namespace / schema information)
+to use in the entity mappings descriptor XML file.
