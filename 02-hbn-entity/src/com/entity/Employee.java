@@ -12,6 +12,9 @@ public class Employee {
 
 	public Employee() {
 		super();
+		// No-argument constructor is required by JPA/Hibernate for entity
+		// instantiation.
+		// This is required when using EntityManager's find(), for instance.
 	}
 
 	public Employee(int employeedId, String employeeName, String employeeAddress, int employeeSalary) {
