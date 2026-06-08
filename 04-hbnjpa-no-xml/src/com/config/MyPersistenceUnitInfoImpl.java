@@ -1,6 +1,7 @@
 package com.config;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -15,8 +16,7 @@ public class MyPersistenceUnitInfoImpl implements PersistenceUnitInfo {
 
 	@Override
 	public String getPersistenceUnitName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "persistence-unit-001";
 	}
 
 	@Override
@@ -63,8 +63,7 @@ public class MyPersistenceUnitInfoImpl implements PersistenceUnitInfo {
 
 	@Override
 	public List<String> getManagedClassNames() {
-		// TODO Auto-generated method stub
-		return null;
+		return Arrays.asList("com.entity.Employee");
 	}
 
 	@Override

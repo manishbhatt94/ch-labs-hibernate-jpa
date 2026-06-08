@@ -46,8 +46,8 @@ public class Launch {
 		demoRead(em);
 		demoUpdate(em);
 		demoRead(em);
-//		demoDelete(em);
-//		demoRead(em);
+		demoDelete(em);
+		demoRead(em);
 
 		// Close the EntityManager and EntityManagerFactory to release resources:
 		em.close();
