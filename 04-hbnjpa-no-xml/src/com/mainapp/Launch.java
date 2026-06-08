@@ -1,19 +1,36 @@
 package com.mainapp;
 
+import java.io.IOException;
+import java.util.Map;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 
+import org.hibernate.jpa.HibernatePersistenceProvider;
+
+import com.config.MyPersistenceUnitInfoImpl;
 import com.entity.Employee;
 
 public class Launch {
 
 	public static void main(String[] args) {
 
-		// Create EntityManagerFactory using the persistence unit name defined in
-		// persistence.xml configuration file:
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence-unit-1");
+		Map<String, String> config = null;
+		ConfigLoader configLoader = new ConfigLoader("my-config.properties");
+
+		try {
+			config = configLoader.loadConfigAsMap();
+		} catch (IOException e) {
+			System.out.println("Error loading configuration: " + e.getMessage());
+			e.printStackTrace();
+			return; // Exit the application if config loading fails
+		}
+
+		// Create EntityManagerFactory using HibernatePersistenceProvider and a custom
+		// implementation of PersistenceUnitInfo:
+		EntityManagerFactory emf = new HibernatePersistenceProvider()
+				.createContainerEntityManagerFactory(new MyPersistenceUnitInfoImpl(), config);
 
 		// Create an EntityManager from the factory, which will be used to interact with
 		// the database:
@@ -29,8 +46,8 @@ public class Launch {
 		demoRead(em);
 		demoUpdate(em);
 		demoRead(em);
-		demoDelete(em);
-		demoRead(em);
+//		demoDelete(em);
+//		demoRead(em);
 
 		// Close the EntityManager and EntityManagerFactory to release resources:
 		em.close();
@@ -71,10 +88,10 @@ public class Launch {
 		transaction.begin();
 
 //		Employee employee = new Employee(1, "Eric Wright", "122nd Ave., Compton, CA", 8920);
-//		Employee employee = new Employee(2, "Nasir Jones", "21st Main, Queens Bridge, NY", 11200);
+		Employee employee = new Employee(2, "Nasir Jones", "21st Main, Queens Bridge, NY", 11200);
 //		Employee employee = new Employee(3, "Method Man", "Park Hill Projects, Staten Island, NY", 9210);
 //		Employee employee = new Employee(4, "Ol' Dirty Bastard", "Brooklyn, NY", 10500);
-		Employee employee = new Employee(5, "Slim Shady", "8 Mile Road, Detroit, MI", 9800);
+//		Employee employee = new Employee(5, "Slim Shady", "8 Mile Road, Detroit, MI", 9800);
 
 		em.persist(employee);
 
