@@ -95,7 +95,7 @@ path only.
 </xsd:schema>
 ```
 
-### Object/Relational Mapping File (can be named "orm.xml")
+## Object/Relational Mapping File (can be named "orm.xml")
 
 Here is the XML metadata with namespace & schema attributes that we must
 provide at the start of the **Object/Relational Mapping File ("orm.xml")**:
@@ -112,9 +112,9 @@ provide at the start of the **Object/Relational Mapping File ("orm.xml")**:
 </entity-mappings>
 ```
 
-### Short Notes on "orm.xml" Elements/Tags & Attributes
+## Short Notes on "orm.xml" Elements/Tags & Attributes
 
-#### <entity> Element
+### "entity" Element ("entity-mappings" -> "entity")
 
 ```xml
 <entity-mappings ...>
@@ -133,7 +133,7 @@ Attributes:
   - **Direct field access** (when `access="FIELD"`) - which the JPA Provider does
      using Reflection API in order to access private instance variables.
 
-#### "table" Element ("entity" -> "table")
+### "table" Element ("entity" -> "table")
 
 ```xml
 <entity-mappings ...>
@@ -144,4 +144,35 @@ Attributes:
 ```
 
 Attributes:
-- `name`: 
+- `name`: The `<table name="custom_table_name" />` element is provided in case
+  we need the name of the DB table to be a custom name, which is derived
+  automatically from the Entity class name by Hibernate. We can omit this
+  `<table>` element if we are okay with letting Hibernate pick the table name
+  from the name of the Entity class.
+
+### "attributes" Element ("entity" -> "attributes")
+
+```xml
+<entity class="com.entity.Employee">
+	<attributes>
+		<id name="employeedId">
+			<column name="employee_id" />
+		</id>
+		<basic name="employeeName">
+			<column name="employee_name" length="40" />
+		</basic>
+		<basic name="employeeAddress"> <!-- Map the "employeeAddress" property in Entity class, to.. -->
+			<column name="employee_address" length="160" />
+		</basic>
+	</attributes>
+</entity>
+```
+
+The `<attributes>` Element (placed within the `<entity>` Element), is used to
+list down within the element, how the fields inside the Entity Java class map
+to the columns inside the corresponding DB table.
+
+`<attributes>` Element can have within it, including others:
+
+- An `<id>` Element which specifies the Primary Key column(s);
+- Multiple `<basic>` Elements which specify other (non Primary Key) columns
