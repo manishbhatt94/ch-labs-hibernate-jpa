@@ -1,5 +1,10 @@
 package com.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "hbn_employee")
 public class Employee {
 
 	private int employeedId;

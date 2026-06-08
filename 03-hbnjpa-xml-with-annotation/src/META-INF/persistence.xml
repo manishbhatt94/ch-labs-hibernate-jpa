@@ -9,8 +9,11 @@
 
 
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		
-		<mapping-file>META-INF/orm.xml</mapping-file>
+
+		<!-- Element : class. Managed class to be included in the persistence unit 
+			and to scan for annotations. It should be annotated with either @Entity, 
+			@Embeddable or @MappedSuperclass. -->
+		<class>com.entity.Employee</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url"
@@ -24,15 +27,14 @@
 			<!-- Inform the JPA Provider about the SQL Dialect of the database -->
 			<property name="hibernate.dialect"
 				value="org.hibernate.dialect.MySQL8Dialect" />
- 
+
 			<!-- Inform the JPA Provider to show the generated SQL statements in the 
 				console -->
 			<property name="hibernate.show_sql" value="true" />
- 
+
 			<!-- Inform the JPA Provider to format the generated SQL statements in 
 				a readable way -->
 			<!-- <property name="hibernate.format_sql" value="true" /> -->
-
 			<!-- Inform the JPA Provider to automatically create/update the database 
 				schema based on the entity mappings -->
 			<property name="hibernate.hbm2ddl.auto" value="update" /> <!-- Values allowed: "update" / "create" -->
