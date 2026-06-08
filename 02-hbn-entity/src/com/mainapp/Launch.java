@@ -29,6 +29,8 @@ public class Launch {
 		demoRead(em);
 		demoUpdate(em);
 		demoRead(em);
+		demoDelete(em);
+		demoRead(em);
 
 		// Close the EntityManager and EntityManagerFactory to release resources:
 		em.close();
@@ -103,6 +105,26 @@ public class Launch {
 			System.out.println("Update operation completed successfully!");
 		} else {
 			System.out.println("Employee with ID 2 not found for update.");
+		}
+
+	}
+
+	private static void demoDelete(EntityManager em) {
+
+		System.out.println("\n\nDeleting an Employee entity from the database...");
+
+		Employee employee = em.find(Employee.class, 2);
+
+		if (employee != null) {
+			EntityTransaction transaction = em.getTransaction();
+			transaction.begin();
+
+			em.remove(employee);
+
+			transaction.commit();
+			System.out.println("Delete operation completed successfully!");
+		} else {
+			System.out.println("Employee with ID 2 not found for deletion.");
 		}
 
 	}
