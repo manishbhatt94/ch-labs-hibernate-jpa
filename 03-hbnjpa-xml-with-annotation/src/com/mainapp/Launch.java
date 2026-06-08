@@ -25,7 +25,7 @@ public class Launch {
 
 		System.out.println("Connection to the database established successfully!");
 
-		// demoInsert(em);
+		demoInsert(em);
 		demoRead(em);
 		demoUpdate(em);
 		demoRead(em);
@@ -35,6 +35,7 @@ public class Launch {
 		// Close the EntityManager and EntityManagerFactory to release resources:
 		em.close();
 		emf.close();
+		System.out.println("\n\nEntityManager and EntityManagerFactory closed successfully. Resources released.");
 
 	}
 
@@ -69,7 +70,12 @@ public class Launch {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 
-		Employee employee = new Employee(2, "Nasir Jones", "21st Main, Queens Bridge, NY", 11200);
+//		Employee employee = new Employee(1, "Eric Wright", "122nd Ave., Compton, CA", 8920);
+//		Employee employee = new Employee(2, "Nasir Jones", "21st Main, Queens Bridge, NY", 11200);
+//		Employee employee = new Employee(3, "Method Man", "Park Hill Projects, Staten Island, NY", 9210);
+//		Employee employee = new Employee(4, "Ol' Dirty Bastard", "Brooklyn, NY", 10500);
+		Employee employee = new Employee(5, "Slim Shady", "8 Mile Road, Detroit, MI", 9800);
+
 		em.persist(employee);
 
 		transaction.commit();

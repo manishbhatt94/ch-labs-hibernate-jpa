@@ -53,3 +53,5 @@ Descriptor, inside the `<persistence-unit>` element, like this:
 > at `org.hibernate.annotations.Entity`. But, when we're using Hibernate's JPA
 > implementation (like we *are* in this project), we need to import & use the
 > `@Entity` annotation from JPA package only.
+
+
