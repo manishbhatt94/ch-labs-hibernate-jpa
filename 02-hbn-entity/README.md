@@ -176,3 +176,4 @@ to the columns inside the corresponding DB table.
 
 - An `<id>` Element which specifies the Primary Key column(s);
 - Multiple `<basic>` Elements which specify other (non Primary Key) columns
+

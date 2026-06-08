@@ -55,3 +55,71 @@ Descriptor, inside the `<persistence-unit>` element, like this:
 > `@Entity` annotation from JPA package only.
 
 
+---
+<br>
+
+# Program Sample Run Output
+
+Here is the program output on a sample run:
+
+```txt
+Jun 08, 2026 3:29:48 PM org.hibernate.jpa.internal.util.LogHelper logPersistenceUnitInformation
+INFO: HHH000204: Processing PersistenceUnitInfo [name: my-persistence-unit-1]
+Jun 08, 2026 3:29:48 PM org.hibernate.Version logVersion
+INFO: HHH000412: Hibernate ORM core version 5.6.5.Final
+Jun 08, 2026 3:29:48 PM org.hibernate.annotations.common.reflection.java.JavaReflectionManager <clinit>
+INFO: HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+Jun 08, 2026 3:29:49 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+WARN: HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+Jun 08, 2026 3:29:49 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001005: using driver [com.mysql.cj.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/ch_labs_hibernate_01]
+Jun 08, 2026 3:29:49 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001001: Connection properties: {user=root, password=****}
+Jun 08, 2026 3:29:49 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001003: Autocommit mode: false
+Jun 08, 2026 3:29:49 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
+INFO: HHH000115: Hibernate connection pool size: 20 (min=1)
+Jun 08, 2026 3:29:49 PM org.hibernate.dialect.Dialect <init>
+INFO: HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+Jun 08, 2026 3:29:49 PM org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl getIsolatedConnection
+INFO: HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@20921b9b] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+Jun 08, 2026 3:29:49 PM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
+INFO: HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+EntityManager created successfully: SessionImpl(1075996552<open>)
+Connection to the database established successfully!
+
+
+Inserting an Employee entity into the database...
+Hibernate: insert into hbn_employee (employee_address, employee_name, employee_salary, employee_id) values (?, ?, ?, ?)
+Insert operation completed successfully!
+
+
+Reading an Employee entity from the database...
+Hibernate: select employee0_.employee_id as employee1_0_0_, employee0_.employee_address as employee2_0_0_, employee0_.employee_name as employee3_0_0_, employee0_.employee_salary as employee4_0_0_ from hbn_employee employee0_ where employee0_.employee_id=?
+Employee found: Employee [employeedId=2, employeeName=Nasir Jones, employeeAddress=21st Main, Queens Bridge, NY, employeeSalary=11200]
+
+
+Updating an Employee entity in the database...
+Hibernate: update hbn_employee set employee_address=?, employee_name=?, employee_salary=? where employee_id=?
+Update operation completed successfully!
+
+
+Reading an Employee entity from the database...
+Employee found: Employee [employeedId=2, employeeName=Nasir Jones, employeeAddress=21st Main, Queens Bridge, NY, employeeSalary=15700]
+
+
+Deleting an Employee entity from the database...
+Hibernate: delete from hbn_employee where employee_id=?
+Delete operation completed successfully!
+
+
+Reading an Employee entity from the database...
+Hibernate: select employee0_.employee_id as employee1_0_0_, employee0_.employee_address as employee2_0_0_, employee0_.employee_name as employee3_0_0_, employee0_.employee_salary as employee4_0_0_ from hbn_employee employee0_ where employee0_.employee_id=?
+Employee found: null
+Jun 08, 2026 3:29:49 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PoolState stop
+INFO: HHH10001008: Cleaning up connection pool [jdbc:mysql://localhost:3306/ch_labs_hibernate_01]
+
+
+EntityManager and EntityManagerFactory closed successfully. Resources released.
+
+```
