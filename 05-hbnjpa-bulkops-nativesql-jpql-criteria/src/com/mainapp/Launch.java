@@ -29,8 +29,8 @@ public class Launch {
 
 		System.out.println("Connection to the database established successfully!");
 
-		demoInsert(em);
-//		demoRead(em);
+//		demoInsert(em);
+		demoRead(em);
 //		demoUpdate(em);
 //		demoRead(em);
 //		demoDelete(em);
@@ -81,9 +81,51 @@ public class Launch {
 
 	private static void demoRead(EntityManager em) {
 
-		System.out.println("\n\nReading an Employee entity from the database...");
+		System.out.println("\n\nReading (multiple) Employee records from the database...\n");
 
-		System.out.println("Employee found: " + null);
+		// @formatter:off
+//		String sql = "SELECT employee_id, employee_name, employee_address, employee_salary \n" +
+//				"    FROM hbn_employee;";
+		// or, using SELECT *:
+		String sql = "SELECT * FROM hbn_employee;";
+		// @formatter:on
+
+		Query nativeQuery1 = em.createNativeQuery(sql);
+		System.out.println("Using [Query createNativeQuery(String sqlString)] method \n"
+				+ "to create a native SQL query without specifying the result mapping. \n"
+				+ "The query results will be returned as an untyped List of Object arrays (List<Object[]>).");
+
+		// Execute a SELECT query and return the query results as an untyped List
+		List<Object[]> results1 = nativeQuery1.getResultList();
+		System.out.println("Number of Employee records retrieved: " + results1.size() + "\n");
+		System.out.println("Raw query results (untyped List): " + results1 + "\n");
+		System.out.println("Employee records retrieved from the database:");
+
+		for (Object[] objectArray : results1) {
+			for (Object obj : objectArray) {
+				System.out.print(obj + " | ");
+			}
+			System.out.println();
+		}
+
+		Query nativeQuery2 = em.createNativeQuery(sql, Employee.class);
+		System.out.println("\nUsing [Query createNativeQuery(String sqlString, Class resultClass)] \n"
+				+ "method to create a native SQL query with result mapping to the \n"
+				+ "Employee entity class. The query results will be returned as an \n"
+				+ "untyped List whose entries can be cast to Employee entity objects.");
+
+		// Execute a SELECT query and return the query results as an untyped List
+		List<Employee> result2 = nativeQuery2.getResultList();
+		System.out.println("Number of Employee records retrieved: " + result2.size() + "\n");
+		System.out.println("Raw query results (untyped List): " + result2 + "\n");
+		System.out.println("Employee records retrieved from the database:");
+
+		for (Object obj : result2) {
+			Employee emp = (Employee) obj;
+			System.out.println(emp);
+		}
+
+		System.out.println("\nRead operation completed successfully!");
 
 	}
 
