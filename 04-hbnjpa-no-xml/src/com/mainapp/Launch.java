@@ -9,6 +9,7 @@ import javax.persistence.EntityTransaction;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
 
+import com.config.ConfigLoader;
 import com.config.MyPersistenceUnitInfoImpl;
 import com.entity.Employee;
 

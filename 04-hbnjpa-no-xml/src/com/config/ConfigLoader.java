@@ -1,4 +1,4 @@
-package com.mainapp;
+package com.config;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,7 +55,7 @@ public class ConfigLoader {
 	private Properties loadConfigAsProperties() throws IOException {
 
 		// Step A: Get the ClassLoader of the current class
-		ClassLoader classLoader = Launch.class.getClassLoader();
+		ClassLoader classLoader = ConfigLoader.class.getClassLoader();
 
 		InputStream inputStream = null;
 		// Step B: Ask it to find the file on the classpath and return a stream
