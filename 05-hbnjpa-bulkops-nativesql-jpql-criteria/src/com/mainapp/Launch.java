@@ -29,11 +29,11 @@ public class Launch {
 
 		System.out.println("Connection to the database established successfully!");
 
-//		demoInsert(em);
+		demoInsert(em);
 		demoRead(em);
-//		demoUpdate(em);
+		demoUpdate(em);
 //		demoRead(em);
-//		demoDelete(em);
+		demoDelete(em);
 //		demoRead(em);
 
 		// Close the EntityManager and EntityManagerFactory to release resources:
@@ -131,27 +131,43 @@ public class Launch {
 
 	private static void demoUpdate(EntityManager em) {
 
-		System.out.println("\n\nUpdating an Employee entity in the database...");
+		System.out.println("\n\nUpdating Employee records in the database...\n");
+		// @formatter:off
+		String sql = "UPDATE hbn_employee \n"
+				+ "    SET employee_salary = employee_salary + 345 \n"
+				+ "    WHERE employee_salary < 11000;";
+		// @formatter:on
 
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 
-		transaction.commit();
+		Query nativeQuery = em.createNativeQuery(sql);
+		int rowsAffected = nativeQuery.executeUpdate();
 
-		System.out.println("Update operation completed successfully!");
+		transaction.commit();
+		System.out.println("Number of Employee records updated: " + rowsAffected);
+
+		System.out.println("\nUpdate operation completed successfully!");
 
 	}
 
 	private static void demoDelete(EntityManager em) {
 
-		System.out.println("\n\nDeleting an Employee entity from the database...");
+		System.out.println("\n\nDeleting an Employee entity from the database...\n");
+		// @formatter:off
+		String sql = "DELETE FROM hbn_employee \n"
+				+ "    WHERE employee_id > 10;";
+		// @formatter:on
 
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
+		Query nativeQuery = em.createNativeQuery(sql);
+		int rowsAffected = nativeQuery.executeUpdate();
 
 		transaction.commit();
+		System.out.println("Number of Employee records deleted: " + rowsAffected);
 
-		System.out.println("Delete operation completed successfully!");
+		System.out.println("\nDelete operation completed successfully!");
 
 	}
 
