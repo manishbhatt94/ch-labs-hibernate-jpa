@@ -34,7 +34,8 @@
 
 			<!-- Inform the JPA Provider to format the generated SQL statements in 
 				a readable way -->
-			<!-- <property name="hibernate.format_sql" value="true" /> -->
+			<property name="hibernate.format_sql" value="false" />
+
 			<!-- Inform the JPA Provider to automatically create/update the database 
 				schema based on the entity mappings -->
 			<property name="hibernate.hbm2ddl.auto" value="update" /> <!-- Values allowed: "update" / "create" -->
