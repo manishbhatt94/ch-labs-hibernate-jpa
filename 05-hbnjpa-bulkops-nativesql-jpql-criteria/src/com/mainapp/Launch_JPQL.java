@@ -1,6 +1,5 @@
 package com.mainapp;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import com.entity.Employee;
 
@@ -29,11 +29,12 @@ public class Launch_JPQL {
 
 		System.out.println("Connection to the database established successfully!");
 
-		demoInsert(em);
-		demoRead(em);
+//		demoInsert(em);
+//		demoNonJpqlInsert(em);
+//		demoRead(em);
 		demoUpdate(em);
 //		demoRead(em);
-		demoDelete(em);
+//		demoDelete(em);
 //		demoRead(em);
 
 		// Close the EntityManager and EntityManagerFactory to release resources:
@@ -56,45 +57,54 @@ public class Launch_JPQL {
 
 		System.out.println("\n\nReading (multiple) Employee records from the database...\n");
 
+		/**
+		 * Note: In JPQL: 1. We query against the entity class and its properties, not
+		 * the database table and columns.
+		 *
+		 * 2. The SELECT clause specifies the entity alias (e.g., 'e') to refer to the
+		 * entity in the query.
+		 *
+		 * 3. In SELECT queries, using the Alias is mandatory.
+		 *
+		 * 4. Using semicolon to terminate the JPQL query string is optional and
+		 * generally not recommended when using JPA APIs, as it may lead to syntax
+		 * errors in some JPA implementations. It's best to omit the semicolon at the
+		 * end of JPQL query strings when using them with JPA APIs.
+		 */
 		// @formatter:off
-//		String sql = "SELECT employee_id, employee_name, employee_address, employee_salary \n" +
-//				"    FROM hbn_employee;";
-		// or, using SELECT *:
-		String sql = "SELECT * FROM hbn_employee;";
+		String jpql = "SELECT e FROM Employee e"; // Notice: No ending semicolon, Alias 'e' is used.
 		// @formatter:on
 
-		Query nativeQuery1 = em.createNativeQuery(sql);
-		System.out.println("Using [Query createNativeQuery(String sqlString)] method \n"
-				+ "to create a native SQL query without specifying the result mapping. \n"
-				+ "The query results will be returned as an untyped List of Object arrays (List<Object[]>).");
+		Query query1 = em.createQuery(jpql);
+		System.out.println("JPQL query created successfully: " + query1 + "\n"
+				+ "Untyped Query object created using EntityManager's method: \n"
+				+ "    public Query createQuery(String qlString);" + "\n");
 
 		// Execute a SELECT query and return the query results as an untyped List
-		List<Object[]> results1 = nativeQuery1.getResultList();
+		List results1 = query1.getResultList();
 		System.out.println("Number of Employee records retrieved: " + results1.size() + "\n");
 		System.out.println("Raw query results (untyped List): " + results1 + "\n");
 		System.out.println("Employee records retrieved from the database:");
 
-		for (Object[] objectArray : results1) {
-			for (Object obj : objectArray) {
-				System.out.print(obj + " | ");
-			}
-			System.out.println();
+		for (Object obj : results1) {
+			Employee emp = (Employee) obj;
+			System.out.println(emp);
 		}
+		System.out.println("\n");
 
-		Query nativeQuery2 = em.createNativeQuery(sql, Employee.class);
-		System.out.println("\nUsing [Query createNativeQuery(String sqlString, Class resultClass)] \n"
-				+ "method to create a native SQL query with result mapping to the \n"
-				+ "Employee entity class. The query results will be returned as an \n"
-				+ "untyped List whose entries can be cast to Employee entity objects.");
+		TypedQuery<Employee> query2 = em.createQuery(jpql, Employee.class);
 
-		// Execute a SELECT query and return the query results as an untyped List
-		List<Employee> result2 = nativeQuery2.getResultList();
+		System.out.println("JPQL query created successfully: " + query1 + "\n"
+				+ "Typed Query object created using EntityManager's method: \n"
+				+ "    public <T> TypedQuery<T> createQuery(String qlString, Class<T> resultClass);" + "\n");
+
+		// Execute a SELECT query and return the query results as a typed List.
+		List<Employee> result2 = query2.getResultList();
 		System.out.println("Number of Employee records retrieved: " + result2.size() + "\n");
-		System.out.println("Raw query results (untyped List): " + result2 + "\n");
+		System.out.println("Query results (typed List): " + result2 + "\n");
 		System.out.println("Employee records retrieved from the database:");
 
-		for (Object obj : result2) {
-			Employee emp = (Employee) obj;
+		for (Employee emp : result2) {
 			System.out.println(emp);
 		}
 
@@ -106,16 +116,38 @@ public class Launch_JPQL {
 
 		System.out.println("\n\nUpdating Employee records in the database...\n");
 		// @formatter:off
-		String sql = "UPDATE hbn_employee \n"
-				+ "    SET employee_salary = employee_salary + 345 \n"
-				+ "    WHERE employee_salary < 11000;";
+		String jpql = "UPDATE Employee e \n"
+				+ "    SET e.employeeSalary = e.employeeSalary + ?1 \n"
+				+ "    WHERE e.employeeSalary < ?2";
 		// @formatter:on
+		/**
+		 * Note: Plain `?` positional parameters are considered deprecated in JPA & give
+		 * below error:
+		 *
+		 * Caused by: org.hibernate.QueryException: Legacy-style query parameters (`?`)
+		 * are no longer supported; use JPA-style ordinal parameters (e.g., `?1`)
+		 * instead. ---
+		 *
+		 * And, apart from using Ordinal Parameters (e.g., `?1`, `?2`), we can also use
+		 * Named Parameters (e.g., `:paramName`) in JPQL queries. For example:
+		 *
+		 * @formatter:off
+		 * String jpql = "UPDATE Employee e SET e.employeeSalary = e.employeeSalary + :increment";
+		 * Query query = em.createQuery(jpql);
+		 * query.setParameter("increment", 345);
+		 * query.executeUpdate();
+		 * @formatter:on
+		 */
 
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 
-		Query nativeQuery = em.createNativeQuery(sql);
-		int rowsAffected = nativeQuery.executeUpdate();
+		Query query = em.createQuery(jpql);
+
+		query.setParameter(1, 99);
+		query.setParameter(2, 11000);
+
+		int rowsAffected = query.executeUpdate();
 
 		transaction.commit();
 		System.out.println("Number of Employee records updated: " + rowsAffected);

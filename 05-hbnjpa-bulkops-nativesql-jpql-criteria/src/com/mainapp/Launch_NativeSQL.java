@@ -32,9 +32,9 @@ public class Launch_NativeSQL {
 		demoInsert(em);
 		demoRead(em);
 		demoUpdate(em);
-//		demoRead(em);
+		demoRead(em);
 		demoDelete(em);
-//		demoRead(em);
+		demoRead(em);
 
 		// Close the EntityManager and EntityManagerFactory to release resources:
 		em.close();
@@ -93,7 +93,7 @@ public class Launch_NativeSQL {
 		Query nativeQuery1 = em.createNativeQuery(sql);
 		System.out.println("Using [Query createNativeQuery(String sqlString)] method \n"
 				+ "to create a native SQL query without specifying the result mapping. \n"
-				+ "The query results will be returned as an untyped List of Object arrays (List<Object[]>).");
+				+ "The query results will be returned as an untyped List of Object arrays (List<Object[]>).\n");
 
 		// Execute a SELECT query and return the query results as an untyped List
 		List<Object[]> results1 = nativeQuery1.getResultList();
@@ -112,7 +112,7 @@ public class Launch_NativeSQL {
 		System.out.println("\nUsing [Query createNativeQuery(String sqlString, Class resultClass)] \n"
 				+ "method to create a native SQL query with result mapping to the \n"
 				+ "Employee entity class. The query results will be returned as an \n"
-				+ "untyped List whose entries can be cast to Employee entity objects.");
+				+ "untyped List whose entries can be cast to Employee entity objects.\n");
 
 		// Execute a SELECT query and return the query results as an untyped List
 		List<Employee> result2 = nativeQuery2.getResultList();
@@ -134,14 +134,18 @@ public class Launch_NativeSQL {
 		System.out.println("\n\nUpdating Employee records in the database...\n");
 		// @formatter:off
 		String sql = "UPDATE hbn_employee \n"
-				+ "    SET employee_salary = employee_salary + 345 \n"
-				+ "    WHERE employee_salary < 11000;";
+				+ "    SET employee_salary = employee_salary + ? \n"
+				+ "    WHERE employee_salary < ?;";
 		// @formatter:on
 
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 
 		Query nativeQuery = em.createNativeQuery(sql);
+
+		nativeQuery.setParameter(1, 345);
+		nativeQuery.setParameter(2, 11000);
+
 		int rowsAffected = nativeQuery.executeUpdate();
 
 		transaction.commit();
@@ -156,12 +160,16 @@ public class Launch_NativeSQL {
 		System.out.println("\n\nDeleting an Employee entity from the database...\n");
 		// @formatter:off
 		String sql = "DELETE FROM hbn_employee \n"
-				+ "    WHERE employee_id > 10;";
+				+ "    WHERE employee_id > ?;";
 		// @formatter:on
 
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
+
 		Query nativeQuery = em.createNativeQuery(sql);
+
+		nativeQuery.setParameter(1, 10);
+
 		int rowsAffected = nativeQuery.executeUpdate();
 
 		transaction.commit();
