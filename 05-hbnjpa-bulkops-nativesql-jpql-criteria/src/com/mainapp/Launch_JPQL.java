@@ -43,39 +43,12 @@ public class Launch_JPQL {
 
 	}
 
+	/* JPQL Does NOT support INSERT Operation */
 	private static void demoInsert(EntityManager em) {
 
-		List<Employee> employees = new ArrayList<>();
-
-		employees.add(new Employee(10234, "Arjun Sharma", "Indiranagar, Bangalore, Karnataka", 55000));
-		employees.add(new Employee(234567, "Priya Nair", "Panampilly Nagar, Kochi, Kerala", 48000));
-		employees.add(new Employee(8765432, "Ravi Kumar", "Madhapur, Hyderabad, Telangana", 60000));
-		employees.add(new Employee(45678, "Sneha Reddy", "T. Nagar, Chennai, Tamil Nadu", 52000));
-		employees.add(new Employee(98765, "Vikram Singh", "Malviya Nagar, Jaipur, Rajasthan", 45000));
-
-		System.out.println("\n\nInserting Employee records into the database...\n");
-		// @formatter:off
-		String sql = "INSERT INTO hbn_employee \n"
-				+ "    (employee_id, employee_name, employee_address, employee_salary) \n"
-				+ "    VALUES (?, ?, ?, ?);";
-		// @formatter:on
-
-		EntityTransaction transaction = em.getTransaction();
-		transaction.begin();
-
-		Query nativeQuery = em.createNativeQuery(sql);
-
-		for (Employee emp : employees) {
-			nativeQuery.setParameter(1, emp.getEmployeedId());
-			nativeQuery.setParameter(2, emp.getEmployeeName());
-			nativeQuery.setParameter(3, emp.getEmployeeAddress());
-			nativeQuery.setParameter(4, emp.getEmployeeSalary());
-			nativeQuery.executeUpdate();
-		}
-
-		transaction.commit();
-
-		System.out.println("\nInsert operation completed successfully!");
+		throw new UnsupportedOperationException("JPQL does NOT support INSERT operation. "
+				+ "Use native SQL queries instead for bulk insert operations; "
+				+ "or EntityManager#persist() for single-row insert.");
 
 	}
 
@@ -168,6 +141,46 @@ public class Launch_JPQL {
 		System.out.println("Number of Employee records deleted: " + rowsAffected);
 
 		System.out.println("\nDelete operation completed successfully!");
+
+	}
+
+	private static void demoNonJpqlInsert(EntityManager em) {
+
+		System.out.println(
+				"\n\nInserting multiple Employee entities using EntityManager#persist() method in a loop...\n");
+
+		EntityTransaction transaction = em.getTransaction();
+		transaction.begin();
+
+		int baseId = 500000;
+		int numRecordsToInsert = 15;
+		int batchSize = 6; // Adjust batch size as needed
+		int inBatchProcessedCount = 0;
+
+		for (int i = 1; i <= numRecordsToInsert; i++) {
+			Employee emp = new Employee(baseId + i, "Employee " + i, "Address " + i, 40000 + i);
+			em.persist(emp);
+			inBatchProcessedCount++;
+
+			// Flush and clear the persistence context after processing a batch of records
+			if (inBatchProcessedCount % batchSize == 0) {
+				em.flush();
+				em.clear();
+				System.out.println("Inserted " + inBatchProcessedCount + " Employee records so far...");
+			}
+		}
+
+		if (inBatchProcessedCount % batchSize != 0) {
+			em.flush();
+			em.clear();
+			System.out.println("Inserted total of " + inBatchProcessedCount + " Employee records.");
+		}
+
+		System.out.println("Committing the transaction to persist the Employee entities to the database...");
+		transaction.commit();
+		System.out.println("Employee entities inserted successfully using EntityManager#persist() method in loop.");
+
+		System.out.println("\nInsert operation completed successfully!");
 
 	}
 
