@@ -11,7 +11,7 @@ import javax.persistence.Query;
 
 import com.entity.Employee;
 
-public class Launch {
+public class Launch_NativeSQL {
 
 	public static void main(String[] args) {
 

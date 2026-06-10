@@ -65,7 +65,11 @@ Hibernate as a JPA Provider - implements those):
 
 ---
 
-## Sample Program Output
+## Sample Program Output - Using Native SQL Query
+
+<details>
+
+<summary>Here's a sample run output for program - `Launch_NativeSQL.java`</summary>
 
 ```txt
 Jun 09, 2026 5:37:39 PM org.hibernate.jpa.internal.util.LogHelper logPersistenceUnitInformation
@@ -185,3 +189,5 @@ INFO: HHH10001008: Cleaning up connection pool [jdbc:mysql://localhost:3306/ch_l
 EntityManager and EntityManagerFactory closed successfully. Resources released.
 
 ```
+
+</details>
