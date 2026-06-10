@@ -30,12 +30,12 @@ public class Launch_JPQL {
 		System.out.println("Connection to the database established successfully!");
 
 //		demoInsert(em);
-//		demoNonJpqlInsert(em);
-//		demoRead(em);
+		demoNonJpqlInsert(em);
+		demoRead(em);
 		demoUpdate(em);
-//		demoRead(em);
-//		demoDelete(em);
-//		demoRead(em);
+		demoRead(em);
+		demoDelete(em);
+		demoRead(em);
 
 		// Close the EntityManager and EntityManagerFactory to release resources:
 		em.close();
@@ -83,7 +83,7 @@ public class Launch_JPQL {
 		// Execute a SELECT query and return the query results as an untyped List
 		List results1 = query1.getResultList();
 		System.out.println("Number of Employee records retrieved: " + results1.size() + "\n");
-		System.out.println("Raw query results (untyped List): " + results1 + "\n");
+		// System.out.println("Raw query results (untyped List): " + results1 + "\n");
 		System.out.println("Employee records retrieved from the database:");
 
 		for (Object obj : results1) {
@@ -101,7 +101,7 @@ public class Launch_JPQL {
 		// Execute a SELECT query and return the query results as a typed List.
 		List<Employee> result2 = query2.getResultList();
 		System.out.println("Number of Employee records retrieved: " + result2.size() + "\n");
-		System.out.println("Query results (typed List): " + result2 + "\n");
+		// System.out.println("Query results (typed List): " + result2 + "\n");
 		System.out.println("Employee records retrieved from the database:");
 
 		for (Employee emp : result2) {
@@ -160,14 +160,18 @@ public class Launch_JPQL {
 
 		System.out.println("\n\nDeleting an Employee entity from the database...\n");
 		// @formatter:off
-		String sql = "DELETE FROM hbn_employee \n"
-				+ "    WHERE employee_id > 10;";
+		String jpql = "DELETE FROM Employee e \n"
+				+ "    WHERE e.employeeId > :empId";
 		// @formatter:on
 
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
-		Query nativeQuery = em.createNativeQuery(sql);
-		int rowsAffected = nativeQuery.executeUpdate();
+
+		Query query = em.createQuery(jpql);
+
+		query.setParameter("empId", 10);
+
+		int rowsAffected = query.executeUpdate();
 
 		transaction.commit();
 		System.out.println("Number of Employee records deleted: " + rowsAffected);
