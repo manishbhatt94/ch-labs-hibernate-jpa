@@ -8,7 +8,11 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
+import com.data.EmployeeData;
 import com.entity.Employee;
 
 public class Launch_CriteriaAPI {
@@ -23,13 +27,13 @@ public class Launch_CriteriaAPI {
 
 		System.out.println("Connection to the database established successfully!");
 
-		demoInsert(em);
+//		demoInsert(em);
 		demoNonCriteriaInsert(em);
-		demoRead(em);
-		demoUpdate(em);
-		demoRead(em);
-		demoDelete(em);
-		demoRead(em);
+//		demoRead(em);
+//		demoUpdate(em);
+//		demoRead(em);
+//		demoDelete(em);
+//		demoRead(em);
 
 		em.close();
 		emf.close();
@@ -50,42 +54,71 @@ public class Launch_CriteriaAPI {
 
 		System.out.println("\n\nReading (multiple) Employee records from the database...\n");
 
-		// @formatter:off
-		String jpql = "SELECT e FROM Employee e"; // Notice: No ending semicolon, Alias 'e' is used.
-		// @formatter:on
+		// Return an instance of CriteriaBuilder for the creation of CriteriaQuery
+		// objects:
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 
-		Query query1 = em.createQuery(jpql);
-		System.out.println("JPQL query created successfully: " + query1 + "\n"
-				+ "Untyped Query object created using EntityManager's method: \n"
-				+ "    public Query createQuery(String qlString);" + "\n");
+		// Create a CriteriaQuery object (or more loosely, a "Read Criteria") with the
+		// specified result type:
+		// (Note: The result type is the type of the objects that will be returned when
+		// the query is executed.)
+		// (CriteriaQuery interface is used for defining SELECT queries in a type-safe
+		// manner using the Criteria API.)
+		// (For UPDATE and DELETE operations, there are separate interfaces:
+		// CriteriaUpdate and CriteriaDelete, respectively.)
+		CriteriaQuery<Employee> cq = criteriaBuilder.createQuery(Employee.class);
+		// ↑⇑⇈ This is how you create a CriteriaQuery object using the
+		// CriteriaBuilder.
 
-		// Execute a SELECT query and return the query results as an untyped List
-		List results1 = query1.getResultList();
-		System.out.println("Number of Employee records retrieved: " + results1.size() + "\n");
+		// Let's say we want to select all Employee records from the database, i.e.,
+		// the equivalent of "SELECT e FROM Employee e" in JPQL.
+		// (or "SELECT * FROM hbn_employee" in SQL.)
+
+		// This defines the FROM clause of the query, specifying the entity to query:
+		Root<Employee> from = cq.from(Employee.class); // ← `from Employee e`
+
+		// This defines the SELECT clause of the query, specifying what to select:
+		cq.select(from); // ← `SELECT e`
+
+		// Create a TypedQuery object from the CriteriaQuery object:
+		TypedQuery<Employee> query = em.createQuery(cq);
+
+		// Execute a SELECT query and return the query results as a typed List:
+		List<Employee> results = query.getResultList();
+
+		System.out.println("Number of Employee records retrieved: " + results.size() + "\n");
 		// System.out.println("Raw query results (untyped List): " + results1 + "\n");
 		System.out.println("Employee records retrieved from the database:");
 
-		for (Object obj : results1) {
-			Employee emp = (Employee) obj;
+		for (Employee emp : results) {
 			System.out.println(emp);
 		}
 		System.out.println("\n");
 
-		TypedQuery<Employee> query2 = em.createQuery(jpql, Employee.class);
+		System.out.println("\nRead operation completed successfully!");
 
-		System.out.println("JPQL query created successfully: " + query2 + "\n"
-				+ "Typed Query object created using EntityManager's method: \n"
-				+ "    public <T> TypedQuery<T> createQuery(String qlString, Class<T> resultClass);" + "\n");
+	}
 
-		// Execute a SELECT query and return the query results as a typed List.
-		List<Employee> result2 = query2.getResultList();
-		System.out.println("Number of Employee records retrieved: " + result2.size() + "\n");
-		// System.out.println("Query results (typed List): " + result2 + "\n");
+		// This defines the FROM clause of the query, specifying the entity to query:
+		Root<Employee> from = cq.from(Employee.class); // ← `from Employee e`
+
+		// This defines the SELECT clause of the query, specifying what to select:
+		cq.select(from); // ← `SELECT e`
+
+		// Create a TypedQuery object from the CriteriaQuery object:
+		TypedQuery<Employee> query = em.createQuery(cq);
+
+		// Execute a SELECT query and return the query results as a typed List:
+		List<Employee> results = query.getResultList();
+
+		System.out.println("Number of Employee records retrieved: " + results.size() + "\n");
+		// System.out.println("Raw query results (untyped List): " + results1 + "\n");
 		System.out.println("Employee records retrieved from the database:");
 
-		for (Employee emp : result2) {
+		for (Employee emp : results) {
 			System.out.println(emp);
 		}
+		System.out.println("\n");
 
 		System.out.println("\nRead operation completed successfully!");
 
