@@ -8,6 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import com.entity.Employee;
 
@@ -35,6 +36,7 @@ public class Launch_NativeSQL {
 		demoRead(em);
 		demoDelete(em);
 		demoRead(em);
+		demoRead_UsingNamedNativeQuery(em);
 
 		// Close the EntityManager and EntityManagerFactory to release resources:
 		em.close();
@@ -176,6 +178,31 @@ public class Launch_NativeSQL {
 		System.out.println("Number of Employee records deleted: " + rowsAffected);
 
 		System.out.println("\nDelete operation completed successfully!");
+
+	}
+
+	private static void demoRead_UsingNamedNativeQuery(EntityManager em) {
+
+		final String queryName = "Employee.findBySalaryGreaterThan";
+
+		// @formatter:off
+		System.out.println("\n\nReading Employee record(s) from the database\n" +
+				"  (Using Named Native [SQL] Query: \"" + queryName + "\")...\n");
+		// @formatter:on
+
+		TypedQuery<Employee> query = em.createNamedQuery(queryName, Employee.class);
+
+		query.setParameter("salary", 10000);
+
+		List<Employee> results = query.getResultList();
+		System.out.println("Number of Employee records retrieved: " + results.size() + "\n");
+		System.out.println("Employee records retrieved from the database:");
+
+		for (Employee emp : results) {
+			System.out.println(emp);
+		}
+
+		System.out.println("\nRead operation completed successfully!");
 
 	}
 

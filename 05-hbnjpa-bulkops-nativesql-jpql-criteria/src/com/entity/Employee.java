@@ -3,10 +3,16 @@ package com.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "hbn_employee")
+// Below is a Named (JPQL) Query:
+@NamedQuery(name = "Employee.findByName", query = "SELECT e FROM Employee e WHERE e.employeeName = :name")
+// Below is a Named Native (SQL) Query:
+@NamedNativeQuery(name = "Employee.findBySalaryGreaterThan", query = "SELECT * FROM hbn_employee WHERE employee_salary > :salary", resultClass = Employee.class)
 public class Employee {
 
 	@Id

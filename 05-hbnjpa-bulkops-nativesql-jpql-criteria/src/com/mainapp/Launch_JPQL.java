@@ -29,13 +29,14 @@ public class Launch_JPQL {
 
 		System.out.println("Connection to the database established successfully!");
 
-//		demoInsert(em);
+		demoInsert(em);
 		demoNonJpqlInsert(em);
 		demoRead(em);
 		demoUpdate(em);
 		demoRead(em);
 		demoDelete(em);
 		demoRead(em);
+		demoRead_UsingNamedQuery(em);
 
 		// Close the EntityManager and EntityManagerFactory to release resources:
 		em.close();
@@ -94,7 +95,7 @@ public class Launch_JPQL {
 
 		TypedQuery<Employee> query2 = em.createQuery(jpql, Employee.class);
 
-		System.out.println("JPQL query created successfully: " + query1 + "\n"
+		System.out.println("JPQL query created successfully: " + query2 + "\n"
 				+ "Typed Query object created using EntityManager's method: \n"
 				+ "    public <T> TypedQuery<T> createQuery(String qlString, Class<T> resultClass);" + "\n");
 
@@ -217,6 +218,32 @@ public class Launch_JPQL {
 		System.out.println("Employee entities inserted successfully using EntityManager#persist() method in loop.");
 
 		System.out.println("\nInsert operation completed successfully!");
+
+	}
+
+	private static void demoRead_UsingNamedQuery(EntityManager em) {
+
+		final String queryName = "Employee.findByName";
+
+		// @formatter:off
+		System.out.println("\n\nReading Employee record(s) from the database\n" +
+				"  (Using Named [JPQL] Query: \"" + queryName + "\")...\n");
+		// @formatter:on
+
+		Query query = em.createNamedQuery(queryName);
+
+		query.setParameter("name", "Method Man");
+
+		List results = query.getResultList();
+		System.out.println("Number of Employee records retrieved: " + results.size() + "\n");
+		System.out.println("Employee records retrieved from the database:");
+
+		for (Object obj : results) {
+			Employee emp = (Employee) obj;
+			System.out.println(emp);
+		}
+
+		System.out.println("\nRead operation completed successfully!");
 
 	}
 

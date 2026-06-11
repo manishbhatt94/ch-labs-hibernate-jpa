@@ -62,6 +62,10 @@ Hibernate as a JPA Provider - implements those):
 - Predefined queries using annotations – reused multiple times.
 - Defined at Entity level using @NamedQuery or @NamedNativeQuery.
 - Improves code readability, performance (can be compiled at startup).
+- For Named Native Query, we can use any of SELECT, UPDATE, DELETE, INSERT statements;
+  since Native (SQL) Query allows all of these.
+- For Named Query (JPQL), we can only use SELECT, UPDATE, DELETE statement; since
+  JPQL itself doesn't support INSERT.
 
 ---
 
