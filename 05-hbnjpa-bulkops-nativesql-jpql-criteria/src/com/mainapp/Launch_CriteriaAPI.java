@@ -143,19 +143,20 @@ public class Launch_CriteriaAPI {
 
 	private static void demoNonCriteriaInsert(EntityManager em) {
 
+		List<Employee> employeesToInsert = EmployeeData.getEmployees();
+
 		System.out.println(
 				"\n\nInserting multiple Employee entities using EntityManager#persist() method in a loop...\n");
+
+		int numRecordsToInsert = employeesToInsert.size();
+		int batchSize = 20; // Adjust batch size as needed
+		int inBatchProcessedCount = 0;
 
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 
-		int baseId = 500000;
-		int numRecordsToInsert = 15;
-		int batchSize = 6; // Adjust batch size as needed
-		int inBatchProcessedCount = 0;
-
 		for (int i = 1; i <= numRecordsToInsert; i++) {
-			Employee emp = new Employee(baseId + i, "Employee " + i, "Address " + i, 40000 + i);
+			Employee emp = employeesToInsert.get(i - 1);
 			em.persist(emp);
 			inBatchProcessedCount++;
 
