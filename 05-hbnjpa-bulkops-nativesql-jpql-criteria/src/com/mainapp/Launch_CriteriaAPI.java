@@ -10,7 +10,9 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CompoundSelection;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -285,20 +287,29 @@ public class Launch_CriteriaAPI {
 	private static void demoUpdate(EntityManager em) {
 
 		System.out.println("\n\nUpdating Employee records in the database...\n");
-		// @formatter:off
-		String jpql = "UPDATE Employee e \n"
-				+ "    SET e.employeeSalary = e.employeeSalary + ?1 \n"
-				+ "    WHERE e.employeeSalary < ?2";
-		// @formatter:on
+
+		// Let's say we to execute below Bulk UPDATE query:
+		// UPDATE Employee e SET e.employeeSalary = 12000 WHERE e.employeeId <= 10;
 
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 
-		Query query = em.createQuery(jpql);
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 
-		query.setParameter(1, 99);
-		query.setParameter(2, 11000);
+		// Create a CriteriaUpdate interface type object (or an "Update Criteria"):
+		CriteriaUpdate<Employee> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(Employee.class);
 
+		Root<Employee> root = criteriaUpdate.from(Employee.class);
+
+		criteriaUpdate.set("employeeSalary", 12000); // ← SET e.employeeSalary = 12000
+
+		criteriaUpdate.where(criteriaBuilder.lessThanOrEqualTo(root.get("employeeId"), 10));
+		// ↑ WHERE e.employeeId <= 10
+
+		// Create a Query from the CriteriaUpdate object:
+		Query query = em.createQuery(criteriaUpdate);
+
+		// Execute the above Query (which is an UPDATE) using Query#executeUpdate()
 		int rowsAffected = query.executeUpdate();
 
 		transaction.commit();
@@ -310,19 +321,28 @@ public class Launch_CriteriaAPI {
 
 	private static void demoDelete(EntityManager em) {
 
-		System.out.println("\n\nDeleting an Employee entity from the database...\n");
-		// @formatter:off
-		String jpql = "DELETE FROM Employee e \n"
-				+ "    WHERE e.employeeId > :empId";
-		// @formatter:on
+		System.out.println("\n\nDeleting Employee entities from the database...\n");
+
+		// Let's say we to execute below Bulk UPDATE query:
+		// DELETE FROM Employee e WHERE e.employeeId > 10;
 
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 
-		Query query = em.createQuery(jpql);
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 
-		query.setParameter("empId", 10);
+		// Create a CriteriaUpdate interface type object (or an "Update Criteria"):
+		CriteriaDelete<Employee> criteriaDelete = criteriaBuilder.createCriteriaDelete(Employee.class);
 
+		Root<Employee> root = criteriaDelete.from(Employee.class);
+
+		criteriaDelete.where(criteriaBuilder.greaterThan(root.get("employeeId"), 10));
+		// ↑ WHERE e.employeeId > 10
+
+		// Create a Query from the CriteriaDelete object:
+		Query query = em.createQuery(criteriaDelete);
+
+		// Execute the above Query (which is a DELETE) using Query#executeUpdate()
 		int rowsAffected = query.executeUpdate();
 
 		transaction.commit();
