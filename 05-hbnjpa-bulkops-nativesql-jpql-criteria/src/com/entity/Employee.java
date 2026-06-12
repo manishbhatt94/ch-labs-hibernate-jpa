@@ -35,6 +35,26 @@ public class Employee {
 		// This is required when using EntityManager's find(), for instance.
 	}
 
+	/**
+	 * Parameterized constructor required in
+	 * {@link com.mainapp.Launch_CriteriaAPI#demoReadComplex_MultiSelect} method for
+	 * creating Employee objects with only employeeId, employeeName and
+	 * employeeSalary fields populated.
+	 *
+	 * This is for using:
+	 * {@code criteriaQuery.multiselect(root.get("employeeId"), root.get("employeeName"), root.get("employeeSalary")); }
+	 *
+	 * @param employeeId
+	 * @param employeeName
+	 * @param employeeSalary
+	 */
+	public Employee(int employeeId, String employeeName, int employeeSalary) {
+		super();
+		this.employeeId = employeeId;
+		this.employeeName = employeeName;
+		this.employeeSalary = employeeSalary;
+	}
+
 	public Employee(int employeeId, String employeeName, String employeeAddress, int employeeSalary) {
 		super();
 		this.employeeId = employeeId;
