@@ -24,6 +24,10 @@ However, as stated in the **schema file (below)** for this Mapping XML,
 it is not necessary that this file be named `orm.xml` or be placed at the above
 path only.
 
+Also read section on **Externalizing XML mapping files** in
+*Hibernate 5.6 User Guide* at this link:
+[docs.hibernate.org/orm/5.6/userguide/html_single/#bootstrap-jpa-xml-files](https://docs.hibernate.org/orm/5.6/userguide/html_single/#bootstrap-jpa-xml-files)
+
 ### Schema Definition (XSD) File for "Object/Relational Mapping" configuration file
 
 ```xml

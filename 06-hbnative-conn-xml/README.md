@@ -70,6 +70,10 @@ As in JPA, two types of configuration have to be specified:
 - By convention, we can choose to name the Hibernative Native API's
    Connection configuration file as `hibernate.cfg.xml` & place it inside
    any directory on the classpath, like directly inside `src/` directory.
+- Few Hibernate 5.6 Documentation Links about *Hibernate Configuration file*,
+   i.e. `hibernate.cfg.xml` and DB connection-related properties:
+   - [docs.hibernate.org/orm/5.6/quickstart/html_single/#hibernate-gsg-tutorial-basic-config](https://docs.hibernate.org/orm/5.6/quickstart/html_single/#hibernate-gsg-tutorial-basic-config)
+   - [docs.hibernate.org/orm/5.6/userguide/html_single/#configurations-database-connection](https://docs.hibernate.org/orm/5.6/userguide/html_single/#configurations-database-connection)
 
 # Hibernative Native API - XSD & DTD? Configuration File & Mapping File
 

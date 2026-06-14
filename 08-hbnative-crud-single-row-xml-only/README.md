@@ -17,7 +17,7 @@ file), using the `<mappping resource=" />` tag / element, inside the
 `<session-factory>` tag / element. Like below:
 
 ```xml
-<!-- hibernate.cfg.xml File: -->
+<!-- File: hibernate.cfg.xml -->
 
 <hibernate-configuration>
 	<session-factory>
@@ -25,8 +25,43 @@ file), using the `<mappping resource=" />` tag / element, inside the
 		<!-- ... -->
 
 		<!-- Specify the Hibernate Mapping file(s): -->
+		<!-- (Register your entity mapping files here) -->
 		<mapping resource="Employee.hbm.xml" />
 		<mapping resource="Department.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>
 ```
+
+### XML Header (DTD / Schema /Namespace / etc.) to use in Hibernate Mapping ".hbm.xml" Files
+
+Refer [this README section](https://github.com/manishbhatt94/ch-labs-hibernate-jpa/tree/main/06-hbnative-conn-xml#hibernative-native-api---xsd--dtd-configuration-file--mapping-file)
+for details on where to find the `hibernate-mapping-3.0.dtd` DTD File inside
+the JAR of `hibernate-core` from your Eclipse IDE, and then copy the sample
+`DOCTYPE` header present in that file, to the top of your `*.hbm.xml` mapping
+files.
+
+The header (or top portion) of your Hibernate Mapping files should contain:
+
+```xml
+<!-- File: EntityClassName.hbm.xml -->
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- DOCTYPE definition done -->
+
+<!-- Now define the details of the mapping for EntityClassName below,
+	within a <hibernate-mapping></hibernate-mapping> tag/element:
+ -->
+<hibernate-mapping>
+	...
+</hibernate-mapping>
+```
+
+Very brief explanations on parts of the Hibernate Mapping files can be found at
+Hibernate 5.6 Getting Started Guide's Section on **2.3 The mapping file** here:
+[docs.hibernate.org/orm/5.6/quickstart/html_single/#hibernate-gsg-tutorial-basic-mapping](https://docs.hibernate.org/orm/5.6/quickstart/html_single/#hibernate-gsg-tutorial-basic-mapping)

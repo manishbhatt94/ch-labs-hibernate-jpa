@@ -99,6 +99,26 @@ ZIP archive containing all JARs) on SourceForge are present here:
 Or the direct ZIP download link on this page is this:
 [sourceforge.net/projects/hibernate/files/hibernate-orm/5.6.5.Final/hibernate-release-5.6.5.Final.zip/download](https://sourceforge.net/projects/hibernate/files/hibernate-orm/5.6.5.Final/hibernate-release-5.6.5.Final.zip/download)
 
+In fact, the SourceForge link is directly mentioned on the Official Hibernate
+5.6 Documentation website's
+[Hibernate 5.6 Getting Started Guide - Section on Release Bundle Downloads](https://docs.hibernate.org/orm/5.6/quickstart/html_single/#_release_bundle_downloads)
+where the SourceForge link
+[sourceforge.net/projects/hibernate/files/hibernate-orm/](https://sourceforge.net/projects/hibernate/files/hibernate-orm/)
+is mentioned as shown in below screenshot:
+
+<table align="center" border="1" cellpadding="8">
+  <tr>
+    <td align="center">
+      <img src="assets/images/fig-06-hbn-docs-release-bundle-dl.png"
+           alt="Hibernate 5.6 Docs - Getting Started Guide - Section on Release Bundle Downloads"
+           title="Hibernate 5.6 Docs - Getting Started Guide - Section on Release Bundle Downloads"
+           width="760" height="504" loading="lazy" border="1">
+      <br />
+      <em>Figure 1: Hibernate 5.6 Docs - Getting Started Guide - Section on Release Bundle Downloads</em>
+    </td>
+  </tr>
+</table>
+
 This ZIP is the canonical distribution for non-Maven setups. It bundles
 `hibernate-core` together with every mandatory dependency, pre-resolved
 and ready to add to a build path. The internal structure is:
@@ -130,7 +150,7 @@ missing from the classpath.
 
 ---
 
-### The `org.hibernate` Group on mvnrepository — What to Ignore
+### The &nbsp;`org.hibernate`&nbsp; Group on mvnrepository — What to Ignore
 
 The `org.hibernate` group on Maven Central lists many artifacts. Most
 are optional extensions unrelated to core ORM functionality:
@@ -254,7 +274,7 @@ Libraries up with the new Java Project.
            title="Hibernate/JPA/MySQL JARs Added to Eclipse Java Project"
            width="760" height="588" loading="lazy" border="1">
       <br />
-      <em>Figure 1: Hibernate/JPA/MySQL JARs Added to Eclipse Java Project</em>
+      <em>Figure 2: Hibernate/JPA/MySQL JARs Added to Eclipse Java Project</em>
     </td>
   </tr>
 </table>
@@ -280,7 +300,7 @@ Click on the **View All** button, as depicted in below screenshot:
            title="MVN Repository - Artifact Overview Tab"
            width="540" height="635" loading="lazy" border="1">
       <br />
-      <em>Figure 2: MVN Repository - Artifact Overview Tab</em>
+      <em>Figure 3: MVN Repository - Artifact Overview Tab</em>
     </td>
   </tr>
 </table>
@@ -311,7 +331,7 @@ screenshot:
            title="MVN Repository - Artifact View All Files Page"
            width="680" height="604" loading="lazy" border="1">
       <br />
-      <em>Figure 3: MVN Repository - Artifact View All Files Page</em>
+      <em>Figure 4: MVN Repository - Artifact View All Files Page</em>
     </td>
   </tr>
 </table>
