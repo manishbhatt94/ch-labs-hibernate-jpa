@@ -13,17 +13,31 @@ directly.
 In this project, we will try establishing connection to our locally running
 MySQL RDBMS, using Hibernative Native API.
 
+> [!IMPORTANT]
+> This project focuses only on establishing connection to locally running MySQL
+> RDBMS server from Hibernate Native API, using:
+> - This project only demonstrates the XML approach of establishing connection
+>   with `hibernate.cfg.xml` XML Hibernate configuration file.
+> - This project does not define any Object/Relational Mapping at all. This
+>   project just establishing a DB connection.
+
 ## Approaches to specify configuration
 
 As in JPA, two types of configuration have to be specified:
+
 1. Configuration for details about <u>**Connection**</u>.
    
    Similar to JPA, when using Hibernate Native API, we can specify
    **Connection** related configuration using these two (2) approaches:
 
     - **XML Approach**
-    - **Pure Java Approach**   
-   <br>
+       - Uses Hibernate configuration file (conventionally named
+       `hibernate.cfg.xml` & placed at classpath).
+       - *The scope of this project is ONLY LIMITED to doing this alone.*
+    - **Pure Java Approach**
+       - *"Hibernate Configuration"* information is supplied in Java code only,
+       without creating the `hibernate.cfg.xml` (or similar) XML file.
+    <br>
 
 1. Configuration for details about <u>**Object/Relational Mapping(s)**</u>.
    
@@ -32,8 +46,16 @@ As in JPA, two types of configuration have to be specified:
    approaches:
 
     - **XML Approach**
+       - Here we specify both the *"Hibernate Configuration"* (i.e. the
+       connection related details etc.) & the *"Hibernate Mapping(s)"* (i.e.
+       the Object Relational Mappings information) in XML files.
     - **XML + Annotations Approach**
+       - In this approach, the *"Hibernate Configuration"* is specified in XML
+       file (`hibernate.cfg.xml`); and the *"Hibernate Mapping(s)"* are kept in
+       annotations in Java source files.
     - **Pure Java Approach**
+       - Here, both the *"Hibernate Configuration"* & the *"Hibernate Mapping(s)"*
+       are mentioned in Java source files only.
 
 ## XML Approach to specify configuration about Database connection
 
