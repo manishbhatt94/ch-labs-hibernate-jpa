@@ -65,3 +65,9 @@ The header (or top portion) of your Hibernate Mapping files should contain:
 Very brief explanations on parts of the Hibernate Mapping files can be found at
 Hibernate 5.6 Getting Started Guide's Section on **2.3 The mapping file** here:
 [docs.hibernate.org/orm/5.6/quickstart/html_single/#hibernate-gsg-tutorial-basic-mapping](https://docs.hibernate.org/orm/5.6/quickstart/html_single/#hibernate-gsg-tutorial-basic-mapping)
+
+This TutorialsPoint article on **Hibernate - Mapping Files** explains in a
+short & simple way the syntax & structure of these `*.hbm.xml` files. This
+article can be found at
+[www.tutorialspoint.com/hibernate/hibernate_mapping_files.htm](https://www.tutorialspoint.com/hibernate/hibernate_mapping_files.htm)
+link.

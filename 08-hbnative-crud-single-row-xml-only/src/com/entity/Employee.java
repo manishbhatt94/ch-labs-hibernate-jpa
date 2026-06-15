@@ -2,7 +2,7 @@ package com.entity;
 
 public class Employee {
 
-	private int employeedId;
+	private int employeeId;
 
 	private String employeeName;
 
@@ -14,20 +14,20 @@ public class Employee {
 		super();
 	}
 
-	public Employee(int employeedId, String employeeName, String employeeAddress, int employeeSalary) {
+	public Employee(int employeeId, String employeeName, String employeeAddress, int employeeSalary) {
 		super();
-		this.employeedId = employeedId;
+		this.employeeId = employeeId;
 		this.employeeName = employeeName;
 		this.employeeAddress = employeeAddress;
 		this.employeeSalary = employeeSalary;
 	}
 
-	public int getEmployeedId() {
-		return employeedId;
+	public int getEmployeeId() {
+		return employeeId;
 	}
 
-	public void setEmployeedId(int employeedId) {
-		this.employeedId = employeedId;
+	public void setEmployeeId(int employeedId) {
+		this.employeeId = employeedId;
 	}
 
 	public String getEmployeeName() {
@@ -56,7 +56,7 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [employeedId=" + employeedId + ", employeeName=" + employeeName + ", employeeAddress="
+		return "Employee [employeeId=" + employeeId + ", employeeName=" + employeeName + ", employeeAddress="
 				+ employeeAddress + ", employeeSalary=" + employeeSalary + "]";
 	}
 
