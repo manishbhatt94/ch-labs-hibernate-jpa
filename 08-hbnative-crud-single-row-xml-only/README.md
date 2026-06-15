@@ -71,3 +71,20 @@ short & simple way the syntax & structure of these `*.hbm.xml` files. This
 article can be found at
 [www.tutorialspoint.com/hibernate/hibernate_mapping_files.htm](https://www.tutorialspoint.com/hibernate/hibernate_mapping_files.htm)
 link.
+
+---
+
+## JPA Methods vs Hibernate (Native) Methods for CRUD Single-Row Operations
+
+
+| Operation | JPA Method | Hibernate Native Method |
+| --------- | ---------- | ----------------------- |
+| **INSERT** | **persist()**  | **save()**                  |
+| Signature: | `public void persist(Object entity);` | `Serializable save(Object object);` |
+| **READ**   | **find()**  |  **get()** |
+| Signature: | `public <T> T find(Class<T> entityClass, Object primaryKey);` | `<T> T get(Class<T> entityType, Serializable id);` |
+| **UPDATE** | **merge()** | **update()** |
+| Signature: | `public <T> T merge(T entity);` | `void update(Object object);` |
+| **DELETE** | **remove()** | **delete()** |
+| Signature: | `public void remove(Object entity);` | `void delete(Object object);` |
+

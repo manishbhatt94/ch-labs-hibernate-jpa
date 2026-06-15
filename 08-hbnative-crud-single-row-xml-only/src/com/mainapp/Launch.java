@@ -20,7 +20,10 @@ public class Launch {
 		System.out.println("Hibernate Session object created: " + session);
 		System.out.println("Connection to the database established successfully!");
 
-		demoInsert(session);
+//		demoInsert(session);
+		demoRead(session);
+//		demoUpdate(session);
+		demoDelete(session);
 
 		session.close();
 		sessionFactory.close();
@@ -44,25 +47,59 @@ public class Launch {
 		session.save(employee);
 
 		transaction.commit();
-		System.out.println("Insert operation completed successfully!");
+		System.out.println("\nInsert operation completed successfully!");
 
 	}
 
-	private static void demoRead() {
+	private static void demoRead(Session session) {
 
 		System.out.println("\n\nReading an Employee entity from the database...");
 
+		Employee employee = session.get(Employee.class, 1);
+
+		System.out.println("\nEmployee found: " + employee);
+
 	}
 
-	private static void demoUpdate() {
+	private static void demoUpdate(Session session) {
 
 		System.out.println("\n\nUpdating an Employee entity in the database...");
 
+		Employee employee = session.get(Employee.class, 1);
+
+		if (employee != null) {
+			employee.setEmployeeSalary(10580);
+
+			Transaction transaction = session.getTransaction();
+			transaction.begin();
+
+			session.update(employee);
+
+			transaction.commit();
+			System.out.println("\nUpdate operation completed successfully!");
+		} else {
+			System.out.println("\nEmployee with ID 1 not found for update.");
+		}
+
 	}
 
-	private static void demoDelete() {
+	private static void demoDelete(Session session) {
 
 		System.out.println("\n\nDeleting an Employee entity from the database...");
+
+		Employee employee = session.get(Employee.class, 1);
+
+		if (employee != null) {
+			Transaction transaction = session.getTransaction();
+			transaction.begin();
+
+			session.delete(employee);
+
+			transaction.commit();
+			System.out.println("\nDelete operation completed successfully!");
+		} else {
+			System.out.println("\nEmployee with ID 1 not found for deletion.");
+		}
 
 	}
 
