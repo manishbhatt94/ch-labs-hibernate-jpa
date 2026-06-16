@@ -30,8 +30,6 @@ public class Launch {
 		// Environment.DRIVER stores the key "hibernate.connection.driver_class":
 		properties.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
 
-		ClassLoader.getSystemResourceAsStream(null);
-
 		// Environment.URL stores the key "hibernate.connection.url":
 		properties.put(Environment.URL, "jdbc:mysql://localhost:3306/ch_labs_hibernate_01");
 
