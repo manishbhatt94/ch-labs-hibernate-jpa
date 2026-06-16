@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class name="com.entity.Employee" table="hbn_employee">
+
+		<id name="employeeId" column="employee_id"></id>
+
+		<property name="employeeName" column="employee_name"
+			length="50" not-null="true"></property>
+
+		<property name="employeeAddress" column="employee_address"
+			length="150"></property>
+
+		<property name="employeeSalary" column="employee_salary"
+			not-null="true"></property>
+
+	</class>
+
+</hibernate-mapping>
