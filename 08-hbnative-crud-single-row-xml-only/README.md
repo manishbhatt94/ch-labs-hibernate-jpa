@@ -80,15 +80,15 @@ link.
 | Operation | JPA Method<br> (on EntityManager interface) | Hibernate Native Method<br> (on Session interface) |
 | --------- | ---------- | ----------------------- |
 | **INSERT** | **persist()**  | **save()**                  |
-| Signature: | `public void persist(Object entity);` | `Serializable save(Object object);` |
+| Signature: | `void persist(Object entity);` | `Serializable save(Object object);` |
 | **READ**<br> *(Eager)*   | **find()**          |  **get()** |
-| Signature: | `public <T> T find(Class<T> entityClass, Object primaryKey);` | `<T> T get(Class<T> entityType, Serializable id);` |
+| Signature: | `<T> T find(Class<T> entityClass, Object primaryKey);` | `<T> T get(Class<T> entityType, Serializable id);` |
 | **READ**<br> *(Lazy)*    | **getReference()**  |  **load()** |
-| Signature: | `public <T> T getReference(Class<T> entityClass, Object primaryKey);` | `<T> T load(Class<T> theClass, Serializable id);` |
+| Signature: | `<T> T getReference(Class<T> entityClass, Object primaryKey);` | `<T> T load(Class<T> theClass, Serializable id);` |
 | **UPDATE** | **merge()** | **update()** |
-| Signature: | `public <T> T merge(T entity);` | `void update(Object object);` |
+| Signature: | `<T> T merge(T entity);` | `void update(Object object);` |
 | **DELETE** | **remove()** | **delete()** |
-| Signature: | `public void remove(Object entity);` | `void delete(Object object);` |
+| Signature: | `void remove(Object entity);` | `void delete(Object object);` |
 
 
 ---
