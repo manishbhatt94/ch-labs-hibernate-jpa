@@ -62,6 +62,10 @@ Descriptor, inside the `<persistence-unit>` element, like this:
 
 Here is the program output on a sample run:
 
+<details>
+
+<summary>Sample Run Output:</summary>
+
 ```txt
 Jun 08, 2026 3:29:48 PM org.hibernate.jpa.internal.util.LogHelper logPersistenceUnitInformation
 INFO: HHH000204: Processing PersistenceUnitInfo [name: my-persistence-unit-1]
@@ -123,3 +127,106 @@ INFO: HHH10001008: Cleaning up connection pool [jdbc:mysql://localhost:3306/ch_l
 EntityManager and EntityManagerFactory closed successfully. Resources released.
 
 ```
+
+</details>
+
+<br>
+
+---
+
+## Sample output for Hibernate JPA Implementation - Eager vs Lazy -- "find()" vs "getReference()"
+
+<details>
+
+<summary>Hibernate JPA Implementation - "find()" vs "getReference()" -- Program Run Output</summary>
+
+```txt
+EntityManager created successfully: SessionImpl(600657906<open>)
+Connection to the database established successfully!
+
+
+======== Demo: EntityManager#find() [Eager] vs. EntityManager#getReference() [Lazy] =========
+
+
+~-~-~-~-~-~-~-~ EntityManager#find() [Eager] ~-~-~-~-~~-~-~-~-~-~-~
+
+
+------>>> When entity with given ID - EXISTS in DB:
+
+-@-- Calling EntityManager#find() with ID: 1 ...
+Hibernate: select employee0_.employee_id as employee1_0_0_, employee0_.employee_address as employee2_0_0_, employee0_.employee_name as employee3_0_0_, employee0_.employee_salary as employee4_0_0_ from hbn_employee employee0_ where employee0_.employee_id=?
+-@---- Called EntityManager#find() with ID: 1
+-@-- Returned employee object class is: [class com.entity.Employee] -- which IS NOT A proxy!
+-@-- Received <non-null> entity object with ID: 1
+-@-- DB table record with ID: 1 -- EXISTS!
+-@-- Calling employee.getEmployeeId() ... 
+-@---- Received employeeId: 1
+-@- Accessing non-ID fields of employee ... 
+-@-- Calling employee.getEmployeeName() ... 
+-@---- Received employeeName: Eric Wright
+-@-- Calling employee.toString() ... 
+-@---- employee.toString(): Employee [employeeId=1, employeeName=Eric Wright, employeeAddress=122nd Ave., Compton, CA, employeeSalary=8920]
+-@- Able to access non-ID fields of employee!
+
+------>>> When entity with given ID - DOES NOT EXIST in DB:
+
+-@-- Calling EntityManager#find() with ID: 9999 ...
+Hibernate: select employee0_.employee_id as employee1_0_0_, employee0_.employee_address as employee2_0_0_, employee0_.employee_name as employee3_0_0_, employee0_.employee_salary as employee4_0_0_ from hbn_employee employee0_ where employee0_.employee_id=?
+-@---- Called EntityManager#find() with ID: 9999
+-@-- Received <null> from EntityManager#find() call with ID: 9999
+-@-- DB table record with ID: 9999 -- DOES NOT EXIST!
+
+
+~-~-~-~-~-~-~-~ EntityManager#getReference() [Lazy] ~-~-~-~-~~-~-~-~-~-~-~
+
+
+------>>> When entity with given ID - EXISTS in DB:
+
+-@-- Calling EntityManager#getReference() with ID: 1 ...
+-@---- Called EntityManager#getReference() with ID: 1
+-@-- Returned employee object class is: [class com.entity.Employee$HibernateProxy$6KRpWtkm] -- which IS A proxy!
+-@-- Received <non-null> entity object with ID: 1
+-@-- DB table record with ID: 1 -- MIGHT or MIGHT NOT EXIST!
+-@-- Calling employee.getEmployeeId() ... 
+-@---- Received employeeId: 1
+-@- Accessing non-ID fields of employee ... 
+-@-- Calling employee.getEmployeeName() ... 
+Hibernate: select employee0_.employee_id as employee1_0_0_, employee0_.employee_address as employee2_0_0_, employee0_.employee_name as employee3_0_0_, employee0_.employee_salary as employee4_0_0_ from hbn_employee employee0_ where employee0_.employee_id=?
+-@---- Received employeeName: Eric Wright
+-@-- Calling employee.toString() ... 
+-@---- employee.toString(): Employee [employeeId=1, employeeName=Eric Wright, employeeAddress=122nd Ave., Compton, CA, employeeSalary=8920]
+-@- Able to access non-ID fields of employee!
+-@-- Therefore, DB table record with ID: 1 -- EXISTS!
+
+------>>> When entity with given ID - DOES NOT EXIST in DB:
+
+-@-- Calling EntityManager#getReference() with ID: 9999 ...
+-@---- Called EntityManager#getReference() with ID: 9999
+-@-- Returned employee object class is: [class com.entity.Employee$HibernateProxy$6KRpWtkm] -- which IS A proxy!
+-@-- Received <non-null> entity object with ID: 9999
+-@-- DB table record with ID: 9999 -- MIGHT or MIGHT NOT EXIST!
+-@-- Calling employee.getEmployeeId() ... 
+-@---- Received employeeId: 9999
+-@- Accessing non-ID fields of employee ... 
+-@-- Calling employee.getEmployeeName() ... 
+Hibernate: select employee0_.employee_id as employee1_0_0_, employee0_.employee_address as employee2_0_0_, employee0_.employee_name as employee3_0_0_, employee0_.employee_salary as employee4_0_0_ from hbn_employee employee0_ where employee0_.employee_id=?
+-@-- Caught EntityNotFoundException while accessing non-ID fields. Exception message: Unable to find com.entity.Employee with id 9999
+-@-- Therefore, DB table record with ID: 9999 -- DOES NOT EXIST!
+
+Jun 17, 2026 4:37:20 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PoolState stop
+INFO: HHH10001008: Cleaning up connection pool [jdbc:mysql://localhost:3306/ch_labs_hibernate_01]
+
+
+EntityManager and EntityManagerFactory closed successfully. Resources released.
+
+```
+
+</details>
+
+<br>
+
+> [!NOTE]
+> Also refer to section which shows Sample Output for Hibernate Native API's
+> **"get()" vs "load()"** eager/lazy methods in
+> [this README](https://github.com/manishbhatt94/ch-labs-hibernate-jpa/tree/main/08-hbnative-crud-single-row-xml-only)
+

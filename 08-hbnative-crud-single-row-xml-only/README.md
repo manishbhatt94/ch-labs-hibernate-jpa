@@ -187,3 +187,94 @@ So the method named `load()` on `IdentifierLoadAccess` does **not** match the be
 - Don't use it if there's any chance the id doesn't exist — you'll get a runtime exception later, somewhere far from the call site, which is harder to debug than a simple `null` check.
 - Don't let the returned proxy escape outside the session/transaction and then access its fields later → `LazyInitializationException`.
 - Don't use it when you actually need to read a field right after — at that point it just becomes a deferred `get()` with extra proxy overhead.
+
+---
+
+## Sample output for Hibernate Native - Eager vs Lazy -- "get()" vs "load()"
+
+<details>
+
+<summary>Hibernate Native API - "get()" vs "load()" -- Program Run Output</summary>
+
+```txt
+Hibernate Session object created: SessionImpl(2036704540<open>)
+Connection to the database established successfully!
+
+
+======== Demo: Session#get() [Eager] vs. Session#load() [Lazy] =========
+
+
+~-~-~-~-~-~-~-~ Session#get() [Eager] ~-~-~-~-~~-~-~-~-~-~-~
+
+
+------>>> When entity with given ID - EXISTS in DB:
+
+-@-- Calling Session#get() with ID: 1 ...
+Hibernate: select employee0_.employee_id as employee1_0_0_, employee0_.employee_name as employee2_0_0_, employee0_.employee_address as employee3_0_0_, employee0_.employee_salary as employee4_0_0_ from hbn_employee employee0_ where employee0_.employee_id=?
+-@---- Called Session#get() with ID: 1
+-@-- Returned employee object class is: [class com.entity.Employee] -- which IS NOT A proxy!
+-@-- Received <non-null> entity object with ID: 1
+-@-- DB table record with ID: 1 -- EXISTS!
+-@-- Calling employee.getEmployeeId() ... 
+-@---- Received employeeId: 1
+-@- Accessing non-ID fields of employee ... 
+-@-- Calling employee.getEmployeeName() ... 
+-@---- Received employeeName: Eric Wright
+-@-- Calling employee.toString() ... 
+-@---- employee.toString(): Employee [employeeId=1, employeeName=Eric Wright, employeeAddress=122nd Ave., Compton, CA, employeeSalary=8920]
+-@- Able to access non-ID fields of employee!
+
+------>>> When entity with given ID - DOES NOT EXIST in DB:
+
+-@-- Calling Session#get() with ID: 9999 ...
+Hibernate: select employee0_.employee_id as employee1_0_0_, employee0_.employee_name as employee2_0_0_, employee0_.employee_address as employee3_0_0_, employee0_.employee_salary as employee4_0_0_ from hbn_employee employee0_ where employee0_.employee_id=?
+-@---- Called Session#get() with ID: 9999
+-@-- Received <null> from Session#get() call with ID: 9999
+-@-- DB table record with ID: 9999 -- DOES NOT EXIST!
+
+
+~-~-~-~-~-~-~-~ Session#load() [Lazy] ~-~-~-~-~~-~-~-~-~-~-~
+
+
+------>>> When entity with given ID - EXISTS in DB:
+
+-@-- Calling Session#load() with ID: 1 ...
+-@---- Called Session#load() with ID: 1
+-@-- Returned employee object class is: [class com.entity.Employee$HibernateProxy$di5YlhiQ] -- which IS A proxy!
+-@-- Received <non-null> entity object with ID: 1
+-@-- DB table record with ID: 1 -- MIGHT or MIGHT NOT EXIST!
+-@-- Calling employee.getEmployeeId() ... 
+-@---- Received employeeId: 1
+-@- Accessing non-ID fields of employee ... 
+-@-- Calling employee.getEmployeeName() ... 
+Hibernate: select employee0_.employee_id as employee1_0_0_, employee0_.employee_name as employee2_0_0_, employee0_.employee_address as employee3_0_0_, employee0_.employee_salary as employee4_0_0_ from hbn_employee employee0_ where employee0_.employee_id=?
+-@---- Received employeeName: Eric Wright
+-@-- Calling employee.toString() ... 
+-@---- employee.toString(): Employee [employeeId=1, employeeName=Eric Wright, employeeAddress=122nd Ave., Compton, CA, employeeSalary=8920]
+-@- Able to access non-ID fields of employee!
+-@-- Therefore, DB table record with ID: 1 -- EXISTS!
+
+------>>> When entity with given ID - DOES NOT EXIST in DB:
+
+-@-- Calling Session#load() with ID: 9999 ...
+-@---- Called Session#load() with ID: 9999
+-@-- Returned employee object class is: [class com.entity.Employee$HibernateProxy$di5YlhiQ] -- which IS A proxy!
+-@-- Received <non-null> entity object with ID: 9999
+-@-- DB table record with ID: 9999 -- MIGHT or MIGHT NOT EXIST!
+-@-- Calling employee.getEmployeeId() ... 
+-@---- Received employeeId: 9999
+-@- Accessing non-ID fields of employee ... 
+-@-- Calling employee.getEmployeeName() ... 
+Hibernate: select employee0_.employee_id as employee1_0_0_, employee0_.employee_name as employee2_0_0_, employee0_.employee_address as employee3_0_0_, employee0_.employee_salary as employee4_0_0_ from hbn_employee employee0_ where employee0_.employee_id=?
+-@-- Caught ObjectNotFoundException while accessing non-ID fields. Exception message: No row with the given identifier exists: [com.entity.Employee#9999]
+-@-- Therefore, DB table record with ID: 9999 -- DOES NOT EXIST!
+
+Jun 17, 2026 4:53:56 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PoolState stop
+INFO: HHH10001008: Cleaning up connection pool [jdbc:mysql://localhost:3306/ch_labs_hibernate_01]
+
+
+Session and SessionFactory closed successfully. Resources released.
+
+```
+
+</details>

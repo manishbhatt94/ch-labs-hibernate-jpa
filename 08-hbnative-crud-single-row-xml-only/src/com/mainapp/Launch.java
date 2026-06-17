@@ -1,5 +1,6 @@
 package com.mainapp;
 
+import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -21,9 +22,10 @@ public class Launch {
 		System.out.println("Connection to the database established successfully!");
 
 //		demoInsert(session);
-		demoRead(session);
+//		demoRead(session);
 //		demoUpdate(session);
-		demoDelete(session);
+//		demoDelete(session);
+		demoGetVsLoad(session);
 
 		session.close();
 		sessionFactory.close();
@@ -100,6 +102,102 @@ public class Launch {
 		} else {
 			System.out.println("\nEmployee with ID 1 not found for deletion.");
 		}
+
+	}
+
+	private static void demoGetVsLoad(Session session) {
+
+		System.out.println("\n\n======== Demo: Session#get() [Eager] vs. Session#load() [Lazy] =========\n");
+		final int idThatExists = 1;
+		final int idThatDoesntExists = 9999;
+
+		System.out.println("\n~-~-~-~-~-~-~-~ Session#get() [Eager] ~-~-~-~-~~-~-~-~-~-~-~\n\n");
+
+		System.out.println("------>>> When entity with given ID - EXISTS in DB:\n");
+		debugCallGet(session, idThatExists);
+
+		System.out.println("------>>> When entity with given ID - DOES NOT EXIST in DB:\n");
+		debugCallGet(session, idThatDoesntExists);
+
+		System.out.println("\n~-~-~-~-~-~-~-~ Session#load() [Lazy] ~-~-~-~-~~-~-~-~-~-~-~\n\n");
+
+		System.out.println("------>>> When entity with given ID - EXISTS in DB:\n");
+		debugCallLoad(session, idThatExists);
+
+		System.out.println("------>>> When entity with given ID - DOES NOT EXIST in DB:\n");
+		debugCallLoad(session, idThatDoesntExists);
+
+	}
+
+	private static void debugCallGet(Session session, final int id) {
+
+		session.clear();
+
+		Employee employee;
+		int receivedId;
+		String receivedName;
+
+		System.out.println("-@-- Calling Session#get() with ID: " + id + " ...");
+		employee = session.get(Employee.class, id);
+		System.out.println("-@---- Called Session#get() with ID: " + id);
+		if (employee == null) {
+			System.out.println("-@-- Received <null> from Session#get() call with ID: " + id);
+			System.out.println("-@-- DB table record with ID: " + id + " -- DOES NOT EXIST!");
+		} else {
+			System.out.println(
+					"-@-- Returned employee object class is: [" + employee.getClass() + "] -- which IS NOT A proxy!");
+			System.out.println("-@-- Received <non-null> entity object with ID: " + id);
+			System.out.println("-@-- DB table record with ID: " + id + " -- EXISTS!");
+			System.out.println("-@-- Calling employee.getEmployeeId() ... ");
+			receivedId = employee.getEmployeeId();
+			System.out.println("-@---- Received employeeId: " + receivedId);
+			System.out.println("-@- Accessing non-ID fields of employee ... ");
+			System.out.println("-@-- Calling employee.getEmployeeName() ... ");
+			receivedName = employee.getEmployeeName();
+			System.out.println("-@---- Received employeeName: " + receivedName);
+			System.out.println("-@-- Calling employee.toString() ... ");
+			System.out.println("-@---- employee.toString(): " + employee.toString());
+			System.out.println("-@- Able to access non-ID fields of employee!");
+		}
+		System.out.println();
+
+	}
+
+	private static void debugCallLoad(Session session, final int id) {
+
+		session.clear();
+
+		Employee employee;
+		int receivedId;
+		String receivedName;
+
+		System.out.println("-@-- Calling Session#load() with ID: " + id + " ...");
+		employee = session.load(Employee.class, id);
+		System.out.println("-@---- Called Session#load() with ID: " + id);
+		System.out
+				.println("-@-- Returned employee object class is: [" + employee.getClass() + "] -- which IS A proxy!");
+
+		System.out.println("-@-- Received <non-null> entity object with ID: " + id);
+		System.out.println("-@-- DB table record with ID: " + id + " -- MIGHT or MIGHT NOT EXIST!");
+		System.out.println("-@-- Calling employee.getEmployeeId() ... ");
+		receivedId = employee.getEmployeeId();
+		System.out.println("-@---- Received employeeId: " + receivedId);
+
+		try {
+			System.out.println("-@- Accessing non-ID fields of employee ... ");
+			System.out.println("-@-- Calling employee.getEmployeeName() ... ");
+			receivedName = employee.getEmployeeName();
+			System.out.println("-@---- Received employeeName: " + receivedName);
+			System.out.println("-@-- Calling employee.toString() ... ");
+			System.out.println("-@---- employee.toString(): " + employee.toString());
+			System.out.println("-@- Able to access non-ID fields of employee!");
+			System.out.println("-@-- Therefore, DB table record with ID: " + id + " -- EXISTS!");
+		} catch (ObjectNotFoundException e) { // org.hibernate.ObjectNotFoundException
+			System.out.println("-@-- Caught ObjectNotFoundException while accessing non-ID "
+					+ "fields. Exception message: " + e.getMessage());
+			System.out.println("-@-- Therefore, DB table record with ID: " + id + " -- DOES NOT EXIST!");
+		}
+		System.out.println();
 
 	}
 

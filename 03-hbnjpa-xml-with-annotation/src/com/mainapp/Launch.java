@@ -2,6 +2,7 @@ package com.mainapp;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
@@ -25,12 +26,13 @@ public class Launch {
 
 		System.out.println("Connection to the database established successfully!");
 
-		demoInsert(em);
-		demoRead(em);
-		demoUpdate(em);
-		demoRead(em);
-		demoDelete(em);
-		demoRead(em);
+//		demoInsert(em);
+//		demoRead(em);
+//		demoUpdate(em);
+//		demoRead(em);
+//		demoDelete(em);
+//		demoRead(em);
+		demoFindVsGetReference(em);
 
 		// Close the EntityManager and EntityManagerFactory to release resources:
 		em.close();
@@ -132,6 +134,106 @@ public class Launch {
 		} else {
 			System.out.println("Employee with ID 2 not found for deletion.");
 		}
+
+	}
+
+	private static void demoFindVsGetReference(EntityManager em) {
+
+		System.out.println(
+				"\n\n======== Demo: EntityManager#find() [Eager] vs. EntityManager#getReference() [Lazy] =========\n");
+		final int idThatExists = 1;
+		final int idThatDoesntExists = 9999;
+
+		System.out.println("\n~-~-~-~-~-~-~-~ EntityManager#find() [Eager] ~-~-~-~-~~-~-~-~-~-~-~\n\n");
+
+		System.out.println("------>>> When entity with given ID - EXISTS in DB:\n");
+		debugCallFind(em, idThatExists);
+
+		System.out.println("------>>> When entity with given ID - DOES NOT EXIST in DB:\n");
+		debugCallFind(em, idThatDoesntExists);
+
+		System.out.println("\n~-~-~-~-~-~-~-~ EntityManager#getReference() [Lazy] ~-~-~-~-~~-~-~-~-~-~-~\n\n");
+
+		System.out.println("------>>> When entity with given ID - EXISTS in DB:\n");
+		debugCallGetReference(em, idThatExists);
+
+		System.out.println("------>>> When entity with given ID - DOES NOT EXIST in DB:\n");
+		debugCallGetReference(em, idThatDoesntExists);
+	}
+
+	private static void debugCallFind(EntityManager em, int id) {
+
+		// Removes all managed entities from the current persistence context. This
+		// forces subsequent read operations to fetch fresh data from the database.
+		em.clear();
+
+		Employee employee;
+		int receivedId;
+		String receivedName;
+
+		System.out.println("-@-- Calling EntityManager#find() with ID: " + id + " ...");
+		employee = em.find(Employee.class, id);
+		System.out.println("-@---- Called EntityManager#find() with ID: " + id);
+		if (employee == null) {
+			System.out.println("-@-- Received <null> from EntityManager#find() call with ID: " + id);
+			System.out.println("-@-- DB table record with ID: " + id + " -- DOES NOT EXIST!");
+		} else {
+			System.out.println(
+					"-@-- Returned employee object class is: [" + employee.getClass() + "] -- which IS NOT A proxy!");
+			System.out.println("-@-- Received <non-null> entity object with ID: " + id);
+			System.out.println("-@-- DB table record with ID: " + id + " -- EXISTS!");
+			System.out.println("-@-- Calling employee.getEmployeeId() ... ");
+			receivedId = employee.getEmployeeId();
+			System.out.println("-@---- Received employeeId: " + receivedId);
+			System.out.println("-@- Accessing non-ID fields of employee ... ");
+			System.out.println("-@-- Calling employee.getEmployeeName() ... ");
+			receivedName = employee.getEmployeeName();
+			System.out.println("-@---- Received employeeName: " + receivedName);
+			System.out.println("-@-- Calling employee.toString() ... ");
+			System.out.println("-@---- employee.toString(): " + employee.toString());
+			System.out.println("-@- Able to access non-ID fields of employee!");
+		}
+		System.out.println();
+
+	}
+
+	private static void debugCallGetReference(EntityManager em, int id) {
+
+		// Removes all managed entities from the current persistence context. This
+		// forces subsequent read operations to fetch fresh data from the database.
+		em.clear();
+
+		Employee employee;
+		int receivedId;
+		String receivedName;
+
+		System.out.println("-@-- Calling EntityManager#getReference() with ID: " + id + " ...");
+		employee = em.getReference(Employee.class, id);
+		System.out.println("-@---- Called EntityManager#getReference() with ID: " + id);
+		System.out
+				.println("-@-- Returned employee object class is: [" + employee.getClass() + "] -- which IS A proxy!");
+
+		System.out.println("-@-- Received <non-null> entity object with ID: " + id);
+		System.out.println("-@-- DB table record with ID: " + id + " -- MIGHT or MIGHT NOT EXIST!");
+		System.out.println("-@-- Calling employee.getEmployeeId() ... ");
+		receivedId = employee.getEmployeeId();
+		System.out.println("-@---- Received employeeId: " + receivedId);
+
+		try {
+			System.out.println("-@- Accessing non-ID fields of employee ... ");
+			System.out.println("-@-- Calling employee.getEmployeeName() ... ");
+			receivedName = employee.getEmployeeName();
+			System.out.println("-@---- Received employeeName: " + receivedName);
+			System.out.println("-@-- Calling employee.toString() ... ");
+			System.out.println("-@---- employee.toString(): " + employee.toString());
+			System.out.println("-@- Able to access non-ID fields of employee!");
+			System.out.println("-@-- Therefore, DB table record with ID: " + id + " -- EXISTS!");
+		} catch (EntityNotFoundException e) { // javax.persistence.EntityNotFoundException
+			System.out.println("-@-- Caught EntityNotFoundException while accessing non-ID "
+					+ "fields. Exception message: " + e.getMessage());
+			System.out.println("-@-- Therefore, DB table record with ID: " + id + " -- DOES NOT EXIST!");
+		}
+		System.out.println();
 
 	}
 
