@@ -138,6 +138,9 @@ public class Launch_JPQL {
 		 * query.setParameter("increment", 345);
 		 * query.executeUpdate();
 		 * @formatter:on
+		 *
+		 * Note: Plain JDBC's PreparedStatement only supports Plain Positional Parameters (i.e. "?"),
+		 * and doesn't support neither Ordinal Parameters nor Named Parameters.
 		 */
 
 		EntityTransaction transaction = em.getTransaction();
