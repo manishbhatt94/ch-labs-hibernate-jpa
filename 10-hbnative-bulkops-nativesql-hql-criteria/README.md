@@ -21,6 +21,7 @@ presented in short bullet points:
   - Allows writing raw SQL queries.
   - Supports INSERT, UPDATE, and DELETE.
   - Suitable for performance-critical or database-specific tasks.
+
 - HQL i.e. Hibernate Query Language (`Session#createQuery()`)
   - Object-oriented query language (uses entity names).
   - Supports READ, UPDATE and DELETE (bulk).
@@ -30,6 +31,12 @@ presented in short bullet points:
     - In HQL, there is this feature called as *Polymorphic Query* which isn't
       available in JPQL.
     - etc.
+  - Documentation links for HQL:
+    - [Hibernate ORM 5.6.15.Final User Guide &sect; Hibernate Query Language for DML](https://docs.hibernate.org/orm/5.6/userguide/html_single/#batch-bulk-hql)
+    - [Hibernate ORM 5.6.15.Final User Guide &sect; HQL and JPQL](https://docs.hibernate.org/orm/5.6/userguide/html_single/#hql)
+    - [Hibernate 6.6.53.Final &sect; A Guide to Hibernate Query Language](https://docs.hibernate.org/orm/6.6/querylanguage/html_single/)
+    - [Hibernate 7.4.2.Final &sect; A Guide to Hibernate Query Language](https://docs.hibernate.org/orm/7.4/querylanguage/html_single/)
+
 - Hibernate Native's Criteria API (Deprecated)
   - This is the old Hibernate Criteria API (`Session#createCriteria()`).
   - **Only supports SELECT operations (bulk read).**
