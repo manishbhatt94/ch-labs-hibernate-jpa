@@ -27,7 +27,7 @@ public class Launch_HQL {
 //		demoInsert(session);
 //		demoNonHqlInsert_WithSession(session);
 //		demoNonHqlInsert_WithStatelessSession(sessionFactory.openStatelessSession());
-		demoInsertIntoSelect(session);
+//		demoInsertIntoSelect(session);
 //		demoRead(session);
 //		demoUpdate(session);
 //		demoRead(session);
@@ -49,6 +49,41 @@ public class Launch_HQL {
 				+ "`INSERT INTO ... SELECT` is supported, though, or\n"
 				+ "Use native SQL queries instead for bulk insert operations;\n"
 				+ "or Session#save() for single-row insert.");
+
+		/**
+		 * Below code doesn't work and fails with exception:
+		 *
+		 * Exception in thread "main" java.lang.IllegalArgumentException:
+		 * org.hibernate.hql.internal.ast.QuerySyntaxException: unexpected token: VALUES
+		 * near line 2, column 5 [INSERT INTO Employee (employeeId, employeeName,
+		 * employeeAddress, employeeSalary) VALUES (:id, :name, :address, :salary)]
+		 *
+		 * This error occurs because Hibernate Query Language (HQL) does not support the
+		 * VALUES keyword for INSERT statements. In HQL, you cannot insert arbitrary,
+		 * raw values directly into a table like you do in standard SQL. HQL only
+		 * supports `INSERT INTO ... SELECT ...` statements, where you transfer data
+		 * from one entity to another.
+		 */
+
+		// @formatter:off
+//		String hql = "INSERT INTO Employee (employeeId, employeeName, employeeAddress, employeeSalary) \n"
+//				+ "    VALUES (:id, :name, :address, :salary)";
+		// @formatter:on
+
+//		Transaction transaction = session.getTransaction();
+//		transaction.begin();
+//
+//		org.hibernate.query.Query<?> query = session.createQuery(hql);
+//
+//		query.setParameter("id", 55555);
+//		query.setParameter("name", "Isaac Newton");
+//		query.setParameter("address", "Berlin, Germany");
+//		query.setParameter("empSalary", 50000);
+//
+//		int rowsAffected = query.executeUpdate();
+//
+//		transaction.commit();
+//		System.out.println("Number of Employee records inserted: " + rowsAffected);
 
 	}
 
