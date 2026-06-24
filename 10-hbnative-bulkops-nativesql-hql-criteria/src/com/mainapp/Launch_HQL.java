@@ -27,12 +27,13 @@ public class Launch_HQL {
 //		demoInsert(session);
 //		demoNonHqlInsert_WithSession(session);
 //		demoNonHqlInsert_WithStatelessSession(sessionFactory.openStatelessSession());
+		demoInsertIntoSelect(session);
 //		demoRead(session);
 //		demoUpdate(session);
 //		demoRead(session);
 //		demoDelete(session);
 //		demoRead(session);
-		demoRead_UsingNamedQuery(session);
+//		demoRead_UsingNamedQuery(session);
 
 		session.close();
 		sessionFactory.close();
@@ -278,6 +279,33 @@ public class Launch_HQL {
 		}
 
 		System.out.println("\nRead operation completed successfully!");
+
+	}
+
+	// For copying data from one table to another using INSERT INTO ... SELECT
+	// query:
+	private static void demoInsertIntoSelect(Session session) {
+
+		System.out.println("\n\nInserting records into EmployeeArchive entity table from Employee entity table...\n");
+		// @formatter:off
+//		String hql = "INSERT INTO EmployeeArchive (employeeId, employeeName, employeeAddress, employeeSalary) \n"
+//				+ "  SELECT e.employeeId, e.employeeName, e.employeeAddress, e.employeeSalary FROM Employee e";
+		// Or without using any entity alias like "FROM Employee e":
+		String hql = "INSERT INTO EmployeeArchive (employeeId, employeeName, employeeAddress, employeeSalary) \n"
+				+ "  SELECT employeeId, employeeName, employeeAddress, employeeSalary FROM Employee";
+		// @formatter:on
+
+		Transaction transaction = session.getTransaction();
+		transaction.begin();
+
+		org.hibernate.query.Query<?> query = session.createQuery(hql);
+
+		int rowsAffected = query.executeUpdate();
+
+		transaction.commit();
+		System.out.println("Number of Employee records inserted: " + rowsAffected);
+
+		System.out.println("\nInsert (data copy) operation completed successfully!");
 
 	}
 

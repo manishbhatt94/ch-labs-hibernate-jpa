@@ -24,6 +24,7 @@
 
 		<!-- Hibernate Mapping Info - Mapping in Java file via Annotations: -->
 		<mapping class="com.entity.Employee" />
+		<mapping class="com.entity.EmployeeArchive" />
 
 	</session-factory>
 </hibernate-configuration>
