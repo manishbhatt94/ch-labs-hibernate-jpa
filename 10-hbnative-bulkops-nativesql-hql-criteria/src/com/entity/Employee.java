@@ -3,7 +3,7 @@ package com.entity;
 @javax.persistence.Entity
 @javax.persistence.Table(name = "hbn_employee")
 // Below is a Named (HQL) Query:
-@org.hibernate.annotations.NamedQuery(name = "Employee.findByName", query = "SELECT e FROM Employee e WHERE e.employeeName = :name")
+@org.hibernate.annotations.NamedQuery(name = "Employee.findByName", query = "SELECT e FROM Employee e WHERE e.employeeName LIKE :name")
 // Below is a Named Native (SQL) Query:
 @org.hibernate.annotations.NamedNativeQuery(name = "Employee.findBySalaryGreaterThan", query = "SELECT * FROM hbn_employee WHERE employee_salary > :salary", resultClass = Employee.class)
 public class Employee {
