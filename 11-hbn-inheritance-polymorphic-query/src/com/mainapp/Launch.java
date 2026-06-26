@@ -27,8 +27,10 @@ public class Launch {
 		System.out.println("Connection to the database established successfully!");
 
 //		insert(session);
-		readSQL(session);
-//		readHQL(session);
+//		readSQL_Union(session);
+//		readHQL_Polymorphic(session);
+		readHQL_Cricketer(session);
+		readHQL_Footballer(session);
 
 		session.close();
 		sessionFactory.close();
@@ -50,9 +52,9 @@ public class Launch {
 
 	}
 
-	private static void readSQL(Session session) {
+	private static void readSQL_Union(Session session) {
 
-		String sql = "SELECT * FROM Cricketer UNION ALL SELECT * FROM Footballer";
+		String sql = "SELECT * FROM cricketer UNION ALL SELECT * FROM footballer";
 
 		NativeQuery<Object[]> nativeQuery = session.createNativeQuery(sql);
 
@@ -68,7 +70,7 @@ public class Launch {
 	}
 
 	// POLYMORPHIC QUERY
-	private static void readHQL(Session session) {
+	private static void readHQL_Polymorphic(Session session) {
 
 		String hql = "from Player";
 
@@ -84,6 +86,32 @@ public class Launch {
 				System.out.println("Player: " + p.playerString());
 			}
 		}
+	}
+
+	private static void readHQL_Cricketer(Session session) {
+
+		String hql = "from Cricketer";
+
+		Query<Cricketer> query = session.createQuery(hql, Cricketer.class);
+		List<Cricketer> list = query.list();
+
+		System.out.println("\n-> Cricketers:");
+		list.forEach(p -> System.out.println(p.playerString()));
+		System.out.println();
+
+	}
+
+	private static void readHQL_Footballer(Session session) {
+
+		String hql = "from Footballer";
+
+		Query<Footballer> query = session.createQuery(hql, Footballer.class);
+		List<Footballer> list = query.list();
+
+		System.out.println("\n-> Footballers:");
+		list.forEach(p -> System.out.println(p.playerString()));
+		System.out.println();
+
 	}
 
 }

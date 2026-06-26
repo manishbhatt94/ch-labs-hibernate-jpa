@@ -42,4 +42,9 @@ public class Footballer extends Player {
 		return "Footballer [footballerType=" + footballerType + ", goals=" + goals + "]";
 	}
 
+	@Override
+	public String playerString() {
+		return super.toString() + "{ " + toString() + " }";
+	}
+
 }

@@ -44,7 +44,7 @@ public class Cricketer extends Player {
 
 	@Override
 	public String playerString() {
-		return super.playerString() + "{ " + toString() + " }";
+		return super.toString() + "{ " + toString() + " }";
 	}
 
 }
