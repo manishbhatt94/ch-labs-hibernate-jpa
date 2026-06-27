@@ -33,17 +33,17 @@ public class Launch_CriteriaAPI {
 
 		System.out.println("Connection to the database established successfully!");
 
-//		demoInsert(em);
-//		demoNonCriteriaInsert(em);
-//		demoRead(em);
-//		demoReadComplex_Projection(em);
-//		demoReadComplex_SelectAll(em);
-//		demoReadComplex_MultiSelect(em);
-//		demoRead(em);
-//		demoUpdate(em);
-//		demoRead(em);
-//		demoDelete(em);
-//		demoRead(em);
+		demoInsert(em);
+		demoNonCriteriaInsert(em);
+		demoRead(em);
+		demoReadComplex_Projection(em);
+		demoReadComplex_SelectAll(em);
+		demoReadComplex_MultiSelect(em);
+		demoRead(em);
+		demoUpdate(em);
+		demoRead(em);
+		demoDelete(em);
+		demoRead(em);
 
 		em.close();
 		emf.close();

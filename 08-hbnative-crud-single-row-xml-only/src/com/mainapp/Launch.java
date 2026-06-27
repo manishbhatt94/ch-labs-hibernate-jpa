@@ -21,10 +21,10 @@ public class Launch {
 		System.out.println("Hibernate Session object created: " + session);
 		System.out.println("Connection to the database established successfully!");
 
-//		demoInsert(session);
-//		demoRead(session);
-//		demoUpdate(session);
-//		demoDelete(session);
+		demoInsert(session);
+		demoRead(session);
+		demoUpdate(session);
+		demoDelete(session);
 		demoGetVsLoad(session);
 
 		session.close();

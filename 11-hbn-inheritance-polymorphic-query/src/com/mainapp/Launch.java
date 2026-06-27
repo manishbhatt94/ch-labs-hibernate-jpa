@@ -26,9 +26,9 @@ public class Launch {
 		System.out.println("Hibernate Session object created: " + session);
 		System.out.println("Connection to the database established successfully!");
 
-//		insert(session);
-//		readSQL_Union(session);
-//		readHQL_Polymorphic(session);
+		insert(session);
+		readSQL_Union(session);
+		readHQL_Polymorphic(session);
 		readHQL_Cricketer(session);
 		readHQL_Footballer(session);
 

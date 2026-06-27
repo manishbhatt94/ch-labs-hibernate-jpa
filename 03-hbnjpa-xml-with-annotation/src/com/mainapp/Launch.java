@@ -26,12 +26,12 @@ public class Launch {
 
 		System.out.println("Connection to the database established successfully!");
 
-//		demoInsert(em);
-//		demoRead(em);
-//		demoUpdate(em);
-//		demoRead(em);
-//		demoDelete(em);
-//		demoRead(em);
+		demoInsert(em);
+		demoRead(em);
+		demoUpdate(em);
+		demoRead(em);
+		demoDelete(em);
+		demoRead(em);
 		demoFindVsGetReference(em);
 
 		// Close the EntityManager and EntityManagerFactory to release resources:

@@ -24,16 +24,16 @@ public class Launch_HQL {
 		System.out.println("Hibernate Session object created: " + session);
 		System.out.println("Connection to the database established successfully!");
 
-//		demoInsert(session);
-//		demoNonHqlInsert_WithSession(session);
-//		demoNonHqlInsert_WithStatelessSession(sessionFactory.openStatelessSession());
-//		demoInsertIntoSelect(session);
-//		demoRead(session);
-//		demoUpdate(session);
-//		demoRead(session);
-//		demoDelete(session);
-//		demoRead(session);
-//		demoRead_UsingNamedQuery(session);
+		demoInsert(session);
+		demoNonHqlInsert_WithSession(session);
+		demoNonHqlInsert_WithStatelessSession(sessionFactory.openStatelessSession());
+		demoInsertIntoSelect(session);
+		demoRead(session);
+		demoUpdate(session);
+		demoRead(session);
+		demoDelete(session);
+		demoRead(session);
+		demoRead_UsingNamedQuery(session);
 
 		session.close();
 		sessionFactory.close();

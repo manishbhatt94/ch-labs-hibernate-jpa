@@ -20,9 +20,9 @@ public class Launch_UsingStatelessSession {
 		System.out.println("Hibernate StatelessSession object created: " + statelessSession);
 		System.out.println("Connection to the database established successfully!");
 
-//		demoInsert(statelessSession);
-//		demoRead(statelessSession);
-//		demoUpdate(statelessSession);
+		demoInsert(statelessSession);
+		demoRead(statelessSession);
+		demoUpdate(statelessSession);
 		demoDelete(statelessSession);
 
 		// Note: StatelessSession interface doesn't have the load() method like

@@ -24,13 +24,13 @@ public class Launch_NativeSQL {
 		System.out.println("Hibernate Session object created: " + session);
 		System.out.println("Connection to the database established successfully!");
 
-//		demoInsert(session);
+		demoInsert(session);
 		demoRead(session);
-//		demoUpdate(session);
-//		demoRead(session);
-//		demoDelete(session);
-//		demoRead(session);
-//		demoRead_UsingNamedNativeQuery(session);
+		demoUpdate(session);
+		demoRead(session);
+		demoDelete(session);
+		demoRead(session);
+		demoRead_UsingNamedNativeQuery(session);
 
 		session.close();
 		sessionFactory.close();

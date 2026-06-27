@@ -25,7 +25,7 @@ public class Launch {
 
 		System.out.println("Connection to the database established successfully!");
 
-		// demoInsert(em);
+		demoInsert(em);
 		demoRead(em);
 		demoUpdate(em);
 		demoRead(em);
