@@ -4,7 +4,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -30,20 +29,32 @@ public class Employee {
 	 * org.hibernate.mapping.SimpleValue.getType(SimpleValue.java:515)
 	 */
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "employee_address_id")
+	@OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Address employeeAddress;
 
 	public Employee() {
 		super();
 	}
 
-	public Employee(int employeeId, String employeeName, String employeeDesignation, Address employeeAddress) {
+	public Employee(int employeeId, String employeeName, String employeeDesignation) {
 		super();
 		this.employeeId = employeeId;
 		this.employeeName = employeeName;
 		this.employeeDesignation = employeeDesignation;
+	}
+
+	public void addEmployeeAddress(Address employeeAddress) {
+		if (employeeAddress != null) {
+			employeeAddress.setEmployee(this);
+		}
 		this.employeeAddress = employeeAddress;
+	}
+
+	public void removeEmployeeAddress() {
+		if (employeeAddress != null) {
+			employeeAddress.setEmployee(null);
+			employeeAddress = null;
+		}
 	}
 
 	public int getEmployeeId() {
@@ -78,10 +89,15 @@ public class Employee {
 		this.employeeAddress = employeeAddress;
 	}
 
+	/*
+	 * Important Note: This toString() implementation doesn't refer the
+	 * employeeAddress field, to avoid circular dependency when printing this object
+	 * & so avoiding StackOverflowError.
+	 */
 	@Override
 	public String toString() {
 		return "Employee [employeeId=" + employeeId + ", employeeName=" + employeeName + ", employeeDesignation="
-				+ employeeDesignation + ", employeeAddress=" + employeeAddress + "]";
+				+ employeeDesignation + "]";
 	}
 
 }

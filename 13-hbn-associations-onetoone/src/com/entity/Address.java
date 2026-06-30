@@ -2,7 +2,10 @@ package com.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Address {
@@ -25,6 +28,10 @@ public class Address {
 
 	@Column(name = "address_state")
 	private String state;
+
+	@OneToOne
+	@JoinColumn(name = "employee_id", unique = true, foreignKey = @ForeignKey(name = "fk_employee_id"))
+	private Employee employee;
 
 	public Address() {
 		super();
@@ -88,6 +95,19 @@ public class Address {
 		this.state = state;
 	}
 
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+	/*
+	 * Important Note: This toString() implementation doesn't refer the employee
+	 * field, to avoid circular dependency when printing this object & so avoiding
+	 * StackOverflowError.
+	 */
 	@Override
 	public String toString() {
 		return "Address [addressId=" + addressId + ", houseNo=" + houseNo + ", street=" + street + ", locality="
