@@ -23,7 +23,7 @@ public class Launch {
 
 //		insert(session);
 //		testForeignKeyUnique(session);
-		readFromEmployee(session);
+//		readFromEmployee(session);
 		readFromAddress(session);
 
 		session.close();
@@ -40,7 +40,11 @@ public class Launch {
 		Address address = session.get(Address.class, addressId);
 		if (address != null) {
 			System.out.println("\nFound address: " + address);
-			System.out.println("Address belongs to employee: " + address.getEmployee());
+			System.out.println("Printing just the employee_id of the employee associated with the address:");
+			System.out.println("Address belongs to employee ID: " + address.getEmployee().getEmployeeId());
+			System.out.println("Calling non-id getters of associated employee (via toString) - "
+					+ "which will trigger SELECT query in case of FetchType.LAZY:");
+			System.out.println("Address that belongs to employee: " + address.getEmployee());
 		} else {
 			System.out.println("\nNot found employee, with employeeId: " + addressId);
 		}
@@ -57,6 +61,9 @@ public class Launch {
 		Employee employee = session.get(Employee.class, employeeId);
 		if (employee != null) {
 			System.out.println("\nFound employee: " + employee);
+			System.out.println("Printing just the address_id of the address associated with this employee:");
+			System.out.println("Employee's address ID: " + employee.getEmployeeAddress().getAddressId());
+			System.out.println("Calling non-id getters of associated address (via toString):");
 			System.out.println("Employee's address: " + employee.getEmployeeAddress());
 		} else {
 			System.out.println("\nNot found employee, with employeeId: " + employeeId);

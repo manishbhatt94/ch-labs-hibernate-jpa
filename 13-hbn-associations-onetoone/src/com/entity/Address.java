@@ -2,6 +2,7 @@ package com.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -29,7 +30,9 @@ public class Address {
 	@Column(name = "address_state")
 	private String state;
 
-	@OneToOne
+//	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER) // FetchType.EAGER is the default
+//	@OneToOne
 	@JoinColumn(name = "employee_id", unique = true, foreignKey = @ForeignKey(name = "fk_employee_id"))
 	private Employee employee;
 
