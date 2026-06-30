@@ -6,6 +6,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,6 +23,7 @@ public class Customer {
 	private String customerName;
 
 	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "ecomm_customer_order", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
 	private List<Order> orders;
 
 	public Customer() {
