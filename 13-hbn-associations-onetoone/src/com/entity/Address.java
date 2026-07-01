@@ -30,8 +30,8 @@ public class Address {
 	@Column(name = "address_state")
 	private String state;
 
-//	@OneToOne(fetch = FetchType.LAZY)
-	@OneToOne(fetch = FetchType.EAGER) // FetchType.EAGER is the default
+	@OneToOne(fetch = FetchType.LAZY)
+//	@OneToOne(fetch = FetchType.EAGER) // FetchType.EAGER is the default
 //	@OneToOne
 	@JoinColumn(name = "employee_id", unique = true, foreignKey = @ForeignKey(name = "fk_employee_id"))
 	private Employee employee;

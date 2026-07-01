@@ -26,7 +26,8 @@ public class Launch {
 		System.out.println("Hibernate Session object created: " + session);
 		System.out.println("Connection to the database established successfully!");
 
-		insert(session);
+//		insert(session);
+		readFromCustomer(session);
 
 		session.close();
 		sessionFactory.close();
@@ -58,26 +59,22 @@ public class Launch {
 
 	}
 
-	private static void readFromEmployee(Session session) {
+	private static void readFromCustomer(Session session) {
 
-		/* @formatter:off
-		final int employeeId = 1;
-		System.out.println("\n\nReading employee, with employeeId: " + employeeId);
+		final int customerId = 1;
+		System.out.println("\n\nReading customer, with customerId: " + customerId);
 
-		Employee employee = session.get(Employee.class, employeeId);
-		if (employee != null) {
-			System.out.println("\nFound employee: " + employee);
-			System.out.println("Printing just the address_id of the address associated with this employee:");
-			System.out.println("Employee's address ID: " + employee.getEmployeeAddress().getAddressId());
-			System.out.println("Calling non-id getters of associated address (via toString):");
-			System.out.println("Employee's address: " + employee.getEmployeeAddress());
+		Customer customer = session.get(Customer.class, customerId);
+		if (customer != null) {
+			System.out.println("\nFound customer: " + customer);
+			System.out.println("\nCalling customer.getOrders():");
+			System.out.println("Customer's orders:");
+			customer.getOrders().forEach(System.out::println);
 		} else {
-			System.out.println("\nNot found employee, with employeeId: " + employeeId);
+			System.out.println("\nNot found customer, with customerId: " + customerId);
 		}
 
-		System.out.println("\nReading task finished for employee, with employeeId: " + employeeId);
-		@formatter:on
-		*/
+		System.out.println("\nReading task finished for customer, with customerId: " + customerId);
 
 	}
 
