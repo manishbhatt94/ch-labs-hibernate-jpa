@@ -26,8 +26,9 @@ public class Launch {
 		System.out.println("Hibernate Session object created: " + session);
 		System.out.println("Connection to the database established successfully!");
 
-//		insert(session);
-		readFromCustomer(session);
+		insert(session);
+//		readFromCustomer(session);
+//		readFromOrder(session);
 
 		session.close();
 		sessionFactory.close();
@@ -35,27 +36,24 @@ public class Launch {
 
 	}
 
-	private static void readFromAddress(Session session) {
+	private static void readFromOrder(Session session) {
 
-		/* @formatter:off
-		final int addressId = 201;
-		System.out.println("\n\nReading address, with addressId: " + addressId);
+		final int orderId = 1001;
+		System.out.println("\n\nReading order, with orderId: " + orderId);
 
-		Address address = session.get(Address.class, addressId);
-		if (address != null) {
-			System.out.println("\nFound address: " + address);
-			System.out.println("Printing just the employee_id of the employee associated with the address:");
-			System.out.println("Address belongs to employee ID: " + address.getEmployee().getEmployeeId());
-			System.out.println("Calling non-id getters of associated employee (via toString) - "
+		Order order = session.get(Order.class, orderId);
+		if (order != null) {
+			System.out.println("\nFound order: " + order);
+			System.out.println("\nPrinting just the customer_id of the customer associated with the order:");
+			System.out.println("This order belongs to customer ID: " + order.getCustomer().getCustomerId());
+			System.out.println("\nCalling non-id getters of associated customer (via toString) - "
 					+ "which will trigger SELECT query in case of FetchType.LAZY:");
-			System.out.println("Address that belongs to employee: " + address.getEmployee());
+			System.out.println("Customer who made this order: " + order.getCustomer());
 		} else {
-			System.out.println("\nNot found employee, with employeeId: " + addressId);
+			System.out.println("\nNot found order, with orderId: " + orderId);
 		}
 
-		System.out.println("\nReading task finished for address, with addressId: " + addressId);
-		@formatter:on
-		*/
+		System.out.println("\nReading task finished for order, with orderId: " + orderId);
 
 	}
 
@@ -89,6 +87,11 @@ public class Launch {
 		List<Order> orders = Arrays.asList(order1, order2, order3);
 
 		Customer customer = new Customer(1, "Manish B", orders);
+
+		// Set the customer for each order (bidirectional association):
+		for (Order order : orders) {
+			order.setCustomer(customer);
+		}
 
 		session.save(customer);
 

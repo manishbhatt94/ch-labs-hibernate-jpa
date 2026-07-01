@@ -20,7 +20,7 @@
 		<!-- <property name="format_sql">true</property> -->
 
 		<!-- Drop and re-create the database schema on startup (if needed) -->
-		<property name="hbm2ddl.auto">update</property> <!-- "update" - Don't drop & re-create schema -->
+		<property name="hbm2ddl.auto">create</property> <!-- "update" - Don't drop & re-create schema -->
 
 		<!-- Hibernate Mapping Info - Mapping in Java file via Annotations: -->
 		<mapping class="com.entity.Customer" />

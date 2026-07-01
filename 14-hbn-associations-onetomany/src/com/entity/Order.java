@@ -5,7 +5,10 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +24,10 @@ public class Order {
 
 	@Column(name = "order_amount")
 	private BigDecimal orderAmount;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "customer_id")
+	private Customer customer;
 
 	public Order() {
 		super();
@@ -55,6 +62,14 @@ public class Order {
 
 	public void setOrderAmount(BigDecimal orderAmount) {
 		this.orderAmount = orderAmount;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	@Override
